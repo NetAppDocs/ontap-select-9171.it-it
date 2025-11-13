@@ -1,0 +1,66 @@
+---
+sidebar: sidebar 
+permalink: concept_lic_production.html 
+keywords: license, licensing, production, purchased, standard, premium, premium xl 
+summary: 'Dopo aver stabilito che ONTAP Select è adatto alla tua organizzazione, puoi acquistare le licenze necessarie per supportare un"implementazione di produzione. Devi scegliere il modello di licenza Capacity Tiers o Capacity Pools, nonché la capacità di storage per ogni implementazione.' 
+---
+= ONTAP Select le licenze acquistate per le distribuzioni di produzione
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Dopo aver stabilito che ONTAP Select è adatto alla tua organizzazione, puoi acquistare le licenze necessarie per supportare un'implementazione di produzione. Devi scegliere il modello di licenza Capacity Tiers o Capacity Pools, nonché la capacità di storage per ogni implementazione.
+
+
+
+== Caratteristiche comuni delle licenze
+
+I modelli di licenza _Capacity Tiers_ e _Capacity Pool_ sono molto diversi sotto diversi aspetti. Tuttavia, condividono diverse caratteristiche comuni, tra cui:
+
+* Quando si distribuisce ONTAP Select in un ambiente di produzione, è necessario acquistare una o più licenze in base alle esigenze.
+* La capacità di archiviazione per una licenza viene assegnata in incrementi di 1 TB.
+* La capacità di archiviazione identifica la capacità grezza e corrisponde alla dimensione totale consentita dei dischi dati disponibili per la macchina virtuale ONTAP Select .
+* Sono supportate tutte le offerte di licenza della piattaforma (standard, premium, premium XL).
+* Per ricevere assistenza quando si acquisiscono le licenze necessarie, è necessario contattare il team o il partner del proprio account NetApp .
+* È necessario caricare i file di licenza nell'utilità di amministrazione Deploy, che quindi applica le licenze in base al modello di licenza.
+* Dopo aver installato e applicato una licenza, puoi aggiungere ulteriore capacità contattando il team o il partner del tuo account NetApp per ottenere una licenza aggiornata.
+* Entrambi i nodi in una coppia HA devono avere la stessa capacità di archiviazione e di licenza.
+* Un nodo ONTAP Select inizialmente distribuito con una licenza acquistata non può essere convertito in una licenza di valutazione.
+
+
+
+
+== Modello di licenza Capacity Tiers
+
+Il modello di licenza Capacity Tiers presenta diverse caratteristiche esclusive, tra cui:
+
+* È necessario acquistare una licenza per ogni nodo ONTAP Select .
+* La quantità minima acquistabile è di 1 TB.
+* Ogni licenza Capacity Tier ha una capacità di archiviazione ed è bloccata su un nodo specifico.
+* Per ogni nodo ONTAP Select NetApp genera un numero di serie di licenza a nove cifre.
+* Lo spazio di archiviazione assegnato a un nodo è perpetuo (non è necessario alcun rinnovo).
+* Il numero di serie del nodo è composto da nove cifre ed è uguale al numero di serie della licenza.
+* È possibile applicare il file di licenza durante la distribuzione del cluster o entro 30 giorni dalla creazione di un cluster.
+
+
+
+
+== Modello di licenza per i pool di capacità
+
+Il modello di licenza Capacity Pools presenta diverse caratteristiche esclusive, tra cui:
+
+* È necessario acquistare una licenza per ogni Capacity Pool condiviso.
+* La quantità minima acquistabile è di 2 TB.
+* Ogni licenza Capacity Pool ha una capacità di archiviazione ed è bloccata su una specifica istanza di License Manager.
+* Per ogni Capacity Pool NetApp genera un numero di serie di licenza a nove cifre.
+* Lo spazio di archiviazione assegnato a un Capacity Pool è valido solo per un periodo di tempo specifico in base all'acquisto (rinnovo richiesto).
+* Il numero di serie del nodo è composto da venti cifre e viene generato da License Manager in base al numero di serie della licenza Capacity Pool.
+* Ogni nodo affitta automaticamente la capacità di archiviazione per i propri aggregati di dati locali da un Capacity Pool condiviso.
+
+
+Per maggiori dettagli sul modello di licenza Capacity Pools, vedere _Modello di licenza Capacity Pools_ per maggiori informazioni.

@@ -1,0 +1,211 @@
+---
+sidebar: sidebar 
+permalink: task_deploy_cluster.html 
+keywords: install, installing, deploy ontap select cluster, create cluster 
+summary: 'È possibile utilizzare l"interfaccia utente Web fornita con l"utilità di amministrazione ONTAP Select Deploy per distribuire un cluster ONTAP Select a nodo singolo o multi-nodo.' 
+---
+= Distribuisci un cluster ONTAP Select
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+È possibile utilizzare l'interfaccia utente Web fornita con l'utilità di amministrazione ONTAP Select Deploy per distribuire un cluster ONTAP Select a nodo singolo o multi-nodo.
+
+Quando si crea un cluster ONTAP Select tramite l'interfaccia web dell'utility Deploy, si viene guidati attraverso una sequenza specifica di passaggi. Il processo esatto varia a seconda che si distribuisca un cluster a nodo singolo o multi-nodo.
+
+
+TIP: Puoi anchelink:https://docs.netapp.com/us-en/ontap-select/task_cli_deploy_cluster.html["distribuire i cluster ONTAP Select utilizzando l'utility Deploy CLI"] .
+
+
+
+== Fase 1: Prepararsi per la distribuzione
+
+Preparatevi alla distribuzione per assicurarvi che abbia successo.
+
+.Passi
+. Pianificazione iniziale.
++
+Rivedere illink:concept_workflow_deploy.html["Piano"] Elink:concept_lic_evaluation.html["Licenza"] sezioni. Sulla base di questa revisione, è possibile prendere decisioni sul cluster, tra cui:
+
++
+** Ipervisore
+** Numero di nodi
+** Tipo di licenza
+** Dimensione della piattaforma (tipo di istanza)
+** ONTAP Select versione
+
+
+. Preparare l'ospite.
++
+È necessario preparare gli host hypervisor su cui verranno eseguiti i nodi ONTAP Select e disporre dei file di licenza di storage necessari in base al modello di licenza utilizzato. Per visualizzare i requisiti di preparazione:
+
++
+.. Sign in all'interfaccia utente web di Deploy.
+.. Selezionareimage:icon_question_mark.gif["Punto interrogativo"] in cima alla pagina.
+.. Selezionare *Prerequisiti*.
+.. Scorri verso il basso per rivedere i requisiti e seleziona *OK*.
+
+
+. Acquisire i file di licenza.
++
+Se si prevede di distribuire il cluster in un ambiente di produzione, è necessario acquisire i file di licenza di archiviazione in base al modello di licenza.
+
+. Distribuisci le credenziali di installazione e account.
++
+link:task_install_deploy.html["Installare l'utilità di amministrazione Deploy ed eseguire la configurazione iniziale"]. È necessario disporre della password per l'account amministratore di Deploy configurato durante il processo di installazione.
+
+. Facoltativamente, installare le immagini dei nodi ONTAP Select precedenti.
++
+Per impostazione predefinita, l'utilità di amministrazione Deploy contiene la versione più aggiornata di ONTAP Select al momento del rilascio. Se si desidera distribuire cluster utilizzando una versione precedente di ONTAP Select, è necessariolink:task_cli_deploy_image_add.html["aggiungi l'immagine ONTAP Select alla tua istanza Deploy"] .
+
+. Scopri di più sulla pagina di avvio "Introduzione".
++
+La pagina iniziale *Guida introduttiva a ONTAP Select Deploy* guida l'utente attraverso il processo in più fasi per la creazione di un cluster. Sono cinque i passaggi principali, tra cui:
+
++
+** Aggiungi licenze
+** Aggiungi host all'inventario
+** Creare un cluster
+** Pre-controllo della rete
+** Distribuisci il cluster
++
+
+NOTE: È possibile eseguire gli stessi passaggi in modo indipendente selezionando le schede nella parte superiore della pagina (Cluster, Host hypervisor, Amministrazione).
+
+
+
+. Esaminare il controllo di rete.
++
+Se si sta distribuendo un cluster multi-nodo, è necessario avere familiarità con il controllo di rete. È possibile eseguire il controllo della connettività di rete utilizzandolink:task_adm_connectivity.html["interfaccia utente web"] o illink:task_cli_connectivity.html["Interfaccia a riga di comando"] .
+
+
+
+
+
+== Passaggio 2: creare un cluster a nodo singolo o multi-nodo
+
+È possibile utilizzare l'interfaccia utente Web ONTAP Select Deploy per distribuire un cluster ONTAP Select a nodo singolo o multi-nodo.
+
+.Prima di iniziare
+Verificare di aver installato l'amministrazione Deploy e completato la configurazione iniziale (password, AutoSupport e vCenter).
+
+.Informazioni su questo compito
+Per una distribuzione di produzione viene creato un cluster ONTAP Select con uno o più nodi.
+
+.Passi
+I passaggi da seguire variano a seconda che si desideri creare un cluster a nodo singolo o multi-nodo. Un cluster multi-nodo può avere due, quattro, sei o otto nodi.
+
+[role="tabbed-block"]
+====
+.Cluster a nodo singolo
+--
+. Sign in all'utilità Deploy tramite l'interfaccia web utilizzando l'account amministratore (admin).
+. Se viene visualizzata la finestra pop-up *Benvenuti in ONTAP Select*, confermare di aver soddisfatto i prerequisiti di configurazione e selezionare *OK*.
+. Se la pagina di avvio del cluster *Introduzione* non viene visualizzata, selezionareimage:icon_question_mark.gif["Punto interrogativo"] nella parte superiore della pagina e seleziona *Inizia*.
+. Nella pagina *Introduzione*, seleziona *Carica*, quindi seleziona una licenza dalla tua workstation locale e seleziona *Apri* per caricare la licenza.
+. Selezionare *Aggiorna* e confermare che la licenza è stata aggiunta.
+. Selezionare *Avanti* per aggiungere un host hypervisor, quindi selezionare *Aggiungi*.
++
+È possibile aggiungere l'host dell'hypervisor direttamente o connettendosi a un server vCenter. Fornire i dettagli e le credenziali dell'host appropriati, se necessario.
+
+. Selezionare *Aggiorna* e confermare che il valore *Tipo* per l'host sia *ESX* o *KVM*.
++
+Tutte le credenziali dell'account fornite vengono aggiunte al database delle credenziali di distribuzione.
+
+. Selezionare *Avanti* per iniziare il processo di creazione del cluster.
+. Nella sezione *Dettagli cluster*, fornire tutte le informazioni richieste che descrivono il cluster e selezionare *Fine*.
+. In *Configurazione nodo*, inserisci l'indirizzo IP di gestione del nodo e seleziona la licenza per il nodo; puoi caricare una nuova licenza se necessario. Puoi anche modificare il nome del nodo, se necessario.
+. Fornire la configurazione *Hypervisor* e *Network*.
++
+Sono disponibili tre configurazioni di nodi che definiscono le dimensioni della macchina virtuale e il set di funzionalità disponibile. Questi tipi di istanza sono supportati rispettivamente dalle offerte Standard, Premium e Premium XL della licenza acquistata. La licenza selezionata per il nodo deve corrispondere o superare il tipo di istanza.
+
++
+Selezionare l'host dell'hypervisor, nonché le reti di gestione e dati.
+
+. Fornire la configurazione *Archiviazione* e selezionare *Fine*.
++
+È possibile selezionare le unità in base al livello di licenza della piattaforma e alla configurazione dell'host.
+
+. Rivedere e confermare la configurazione del cluster.
++
+È possibile modificare la configurazione selezionandoimage:icon_pencil.gif["Modificare"] nella sezione applicabile.
+
+. Selezionare *Avanti* e fornire la password dell'amministratore ONTAP .
+. Selezionare *Crea cluster* per avviare il processo di creazione del cluster, quindi selezionare *OK* nella finestra pop-up.
++
+La creazione del cluster può richiedere fino a 30 minuti.
+
+. Monitorare il processo di creazione del cluster in più fasi per confermare che il cluster sia stato creato correttamente.
++
+La pagina viene aggiornata automaticamente a intervalli regolari.
+
+
+
+--
+.Cluster multi-nodo
+--
+. Sign in all'utilità Deploy tramite l'interfaccia web utilizzando l'account amministratore (admin).
+. Se viene visualizzata la finestra popup *Benvenuti in ONTAP Select*, confermare di aver soddisfatto i prerequisiti di configurazione e selezionare *OK*.
+. Se la pagina di avvio del cluster *Introduzione* non viene visualizzata, selezionareimage:icon_question_mark.gif["Punto interrogativo"] nella parte superiore della pagina e seleziona *Inizia*.
+. Nella pagina *Introduzione*, seleziona *Carica*, seleziona una licenza dalla tua workstation locale e seleziona *Apri* per caricare la licenza. Ripeti l'operazione per aggiungere altre licenze.
+. Selezionare *Aggiorna* e confermare che le licenze sono state aggiunte.
+. Selezionare *Avanti* per aggiungere tutti gli host dell'hypervisor, quindi selezionare *Aggiungi*.
++
+È possibile aggiungere gli host dell'hypervisor direttamente o connettendosi a un server vCenter. Fornire i dettagli e le credenziali dell'host appropriati, se necessario.
+
+. Selezionare *Aggiorna* e confermare che il valore *Tipo* per l'host sia *ESX* o *KVM*.
++
+Tutte le credenziali dell'account fornite vengono aggiunte al database delle credenziali di distribuzione.
+
+. Selezionare *Avanti* per iniziare il processo di creazione del cluster.
+. Nella sezione *Dettagli cluster*, seleziona la *Dimensione cluster* desiderata, fornisci tutte le informazioni richieste che descrivono i cluster e seleziona *Fine*.
+. In *Configurazione nodo*, inserisci gli indirizzi IP di gestione dei nodi e seleziona le licenze per ciascun nodo; puoi caricare una nuova licenza se necessario. Puoi anche modificare i nomi dei nodi, se necessario.
+. Fornire la configurazione *Hypervisor* e *Network*.
++
+Sono disponibili tre configurazioni di nodi che definiscono le dimensioni della macchina virtuale e il set di funzionalità disponibile. Questi tipi di istanza sono supportati rispettivamente dalle offerte Standard, Premium e Premium XL della licenza acquistata. La licenza selezionata per i nodi deve corrispondere o superare il tipo di istanza.
+
++
+Selezionare gli host dell'hypervisor, nonché le reti di gestione, dati e interne.
+
+. Fornire la configurazione *Archiviazione* e selezionare *Fine*.
++
+È possibile selezionare le unità in base al livello di licenza della piattaforma e alla configurazione dell'host.
+
+. Rivedere e confermare la configurazione del cluster.
++
+È possibile modificare la configurazione selezionandoimage:icon_pencil.gif["Modificare"] nella sezione applicabile.
+
+. Selezionare *Avanti* ed eseguire il pre-controllo di rete selezionando *Esegui*. In questo modo si verifica che la rete interna selezionata per il traffico del cluster ONTAP funzioni correttamente.
+. Selezionare *Avanti* e fornire la password dell'amministratore ONTAP .
+. Selezionare *Crea cluster* per avviare il processo di creazione del cluster, quindi selezionare *OK* nella finestra popup.
++
+La creazione del cluster può richiedere fino a 45 minuti.
+
+. Monitorare il processo di creazione del cluster in più fasi per confermare che il cluster sia stato creato correttamente.
++
+La pagina viene aggiornata automaticamente a intervalli regolari.
+
+
+
+--
+====
+
+
+== Fase 3: Completare la distribuzione
+
+Dopo aver distribuito il cluster,link:https://docs.netapp.com/us-en/ontap/system-admin/setup-autosupport-task.html["confermare che la funzionalità ONTAP Select AutoSupport è configurata"^] poilink:task_cli_clusters.html["eseguire il backup dei dati di configurazione ONTAP Select Deploy"] .
+
+[TIP]
+====
+Se l'operazione di creazione del cluster viene avviata ma non viene completata, la password amministrativa ONTAP definita potrebbe non essere applicata. In tal caso, è possibile determinare la password amministrativa temporanea per il cluster ONTAP Select utilizzando il seguente comando CLI:
+
+[source, cli]
+----
+(ONTAPdeploy) !/opt/netapp/tools/get_cluster_temp_credentials --cluster-name my_cluster
+----
+====

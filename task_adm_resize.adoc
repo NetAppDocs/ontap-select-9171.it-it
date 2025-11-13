@@ -1,0 +1,39 @@
+---
+sidebar: sidebar 
+permalink: task_adm_resize.html 
+keywords: administer, administering, web, resizing nodes, resizing 
+summary: 'Dopo aver distribuito un cluster ONTAP Select , è possibile aggiornare il tipo di istanza hypervisor dei nodi utilizzando l"utilità di amministrazione Deploy.' 
+---
+= Ridimensiona i nodi del cluster ONTAP Select
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Dopo aver distribuito un cluster ONTAP Select , è possibile aggiornare il tipo di istanza hypervisor dei nodi utilizzando l'utilità di amministrazione Deploy.
+
+
+NOTE: È possibile eseguire l'operazione di ridimensionamento dei nodi del cluster quando si utilizza il modello di licenza Capacity Tiers e il modello di licenza Capacity Pools.
+
+
+NOTE: Il ridimensionamento al tipo di istanza di grandi dimensioni è supportato solo su ESXi.
+
+.Prima di iniziare
+Il cluster deve essere nello stato online.
+
+.Informazioni su questo compito
+Questa attività descrive come utilizzare l'interfaccia utente web di Deploy. È anche possibile utilizzare la CLI di Deploy per eseguire il ridimensionamento dell'istanza. Indipendentemente dall'interfaccia utilizzata, il tempo necessario per l'operazione di ridimensionamento può variare significativamente in base a diversi fattori e potrebbe richiedere molto tempo per essere completato. È possibile ridimensionare un nodo solo a una dimensione maggiore.
+
+.Passi
+. Sign in all'interfaccia utente Web dell'utilità Deploy utilizzando l'account amministratore.
+. Fare clic sulla scheda *Cluster* nella parte superiore della pagina e selezionare il cluster desiderato dall'elenco.
+. Nella pagina dei dettagli del cluster, fare clic sull'icona dell'ingranaggio a destra della pagina e selezionare *Ridimensionamento istanza*.
+. Selezionare il *Tipo di istanza* e fornire le credenziali ONTAP , quindi fare clic su *Modifica*.
+
+
+.Dopo aver finito
+È necessario attendere il completamento dell'operazione di ridimensionamento.

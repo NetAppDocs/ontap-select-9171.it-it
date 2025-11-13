@@ -1,0 +1,42 @@
+---
+sidebar: sidebar 
+permalink: task_lic_acquire_ct.html 
+keywords: license, licensing, acquire, Capacity Tiers 
+summary: Quando si utilizza la licenza Capacity Tiers, è necessario acquisire un file di licenza per ciascun nodo ONTAP Select . Il file di licenza definisce la capacità di storage del nodo ed è vincolato al nodo tramite il numero di serie univoco di nove cifre assegnato da NetApp. 
+---
+= Acquisisci una licenza ONTAP Select Capacity Tier
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Quando si utilizza la licenza Capacity Tiers, è necessario acquisire un file di licenza per ciascun nodo ONTAP Select . Il file di licenza definisce la capacità di storage del nodo ed è vincolato al nodo tramite il numero di serie univoco di nove cifre assegnato da NetApp.
+
+.Prima di iniziare
+È necessario disporre del numero di serie della licenza a nove cifre assegnato al nodo da NetApp. Prima di tentare di acquisire un file di licenza, è necessario attendere almeno ventiquattro ore dalla data di spedizione dell'ordine di acquisto.
+
+.Informazioni su questo compito
+È necessario eseguire questa attività per ogni nodo ONTAP Select che richiede una licenza Capacity Tier.
+
+.Passi
+. Accedi al sito delle licenze ONTAP Select tramite un browser web:
++
+`https://register.netapp.com/register/getlicensefile`
+
+. Sign in utilizzando le credenziali del tuo account NetApp .
+. Nella pagina *Generatore di licenze*, seleziona l'offerta di licenza desiderata dalla casella a discesa.
+. Compilare i campi rimanenti nella stessa pagina, incluso il *Numero di serie del prodotto*, che è il numero di serie del nodo ONTAP Select .
+. Fare clic su *Invia*.
+. Dopo aver convalidato la richiesta, seleziona il metodo di consegna della licenza.
++
+Puoi cliccare su *Scarica licenza* o su *Invia licenza via email*.
+
+. Conferma di aver ricevuto il file di licenza in base al metodo di consegna selezionato.
+
+
+.Dopo aver finito
+È necessario caricare il file di licenza nell'utilità di amministrazione Deploy prima di poterlo applicare a un nodo ONTAP Select .

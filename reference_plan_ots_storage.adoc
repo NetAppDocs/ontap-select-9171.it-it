@@ -1,0 +1,248 @@
+---
+sidebar: sidebar 
+permalink: reference_plan_ots_storage.html 
+keywords: plan, planning, storage, software raid, hardware raid, raid, nvme 
+summary: 'Esistono diverse problematiche di pianificazione relative all"archiviazione host ONTAP Select che dovresti prendere in considerazione.' 
+---
+= Considerazioni su storage e RAID ONTAP Select
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Esistono diverse problematiche di pianificazione relative all'archiviazione host ONTAP Select che dovresti prendere in considerazione.
+
+
+NOTE: Le informazioni sul supporto per l'archiviazione esterna sono descritte inlink:reference_plan_ots_vnas.html["Requisiti vNAS ONTAP ONTAP Select"] .
+
+
+
+== Requisiti del controller RAID hardware
+
+Il controller RAID sull'host hypervisor in cui si distribuisce ONTAP Select deve soddisfare diversi requisiti.
+
+
+NOTE: Un host su cui è in esecuzione ONTAP Select richiede unità fisiche locali quando si utilizza un controller RAID hardware o la funzionalità RAID software fornita da ONTAP Select. Se si utilizza la soluzione vNAS ONTAP Select per accedere a storage esterno, non vengono utilizzati un controller RAID locale e la funzionalità RAID software.
+
+I requisiti minimi per il controller RAID includono:
+
+* Capacità di trasmissione di 12 Gbps
+* Cache interna da 512 MB con batteria di backup o flash (SuperCAP)
+* Configurato in modalità write back:
++
+** Abilita la modalità failback per "scrivere attraverso" (se supportata)
+** Abilita la policy "leggi sempre in anticipo" (se supportata)
+
+
+* Tutti i dischi locali dietro il controller RAID devono essere configurati come un singolo gruppo RAID; se necessario, è possibile utilizzare più controller RAID:
++
+** Disattivare la cache dell'unità locale per il gruppo RAID, fondamentale per preservare l'integrità dei dati.
+
+
+* La configurazione LUN deve essere eseguita in base alle seguenti linee guida:
++
+** Se la dimensione del gruppo RAID supera la dimensione massima del LUN di 64 TB, è necessario configurare più LUN di uguali dimensioni che consumino tutto lo spazio di archiviazione disponibile nel gruppo RAID.
+** Se la dimensione del gruppo RAID è inferiore alla dimensione massima del LUN di 64 TB, è necessario configurare un LUN che consumi tutto lo spazio di archiviazione disponibile nel gruppo RAID.
+
+
+
+
+
+
+== Requisiti RAID software
+
+Quando si distribuisce un cluster ONTAP Select sull'hypervisor, è possibile utilizzare la funzionalità RAID software offerta da ONTAP Select anziché un controller RAID hardware locale. Esistono diversi requisiti e restrizioni di cui è necessario essere a conoscenza prima di distribuire un cluster utilizzando il RAID software.
+
+
+
+=== Requisiti generali
+
+L'ambiente per una distribuzione RAID software deve soddisfare i seguenti requisiti fondamentali:
+
+* VMware ESXi 7.0 GA (build 15843807) o versione successiva
+* Licenza premium ONTAP Select o superiore
+* Solo unità SSD locali
+* Separazione dei dischi di sistema dalla radice e dagli aggregati di dati
+* Nessun controller RAID hardware sull'host
+
+
+
+NOTE: Se è presente un controller RAID hardware, vederelink:concept_stor_concepts_chars.html["Archiviazione approfondita"] sezione per ulteriori requisiti di configurazione.
+
+
+
+=== Requisiti specifici di ESXi
+
+* VMware ESXi 7.0 GA (build 15843807) o versione successiva
+* VMware VMotion, HA e DRS non sono supportati
+* Non è possibile utilizzare il RAID software con un nodo aggiornato da ONTAP Select 9.4 o versioni precedenti. In tal caso, è necessario creare un nuovo nodo per l'implementazione del RAID software.
+
+
+
+
+=== Requisiti specifici KVM
+
+Esistono anche requisiti specifici di configurazione del pacchetto software. Vedi illink:https://docs.netapp.com/us-en/ontap-select/kvm-host-configuration-and-preparation-checklist.html#prepare-linux-server["preparazione del server Linux"] per maggiori informazioni.
+
+Aspettative dei media per KVM:: I dispositivi di archiviazione flash SSD utilizzati devono soddisfare i seguenti requisiti aggiuntivi:
++
+--
+* I dispositivi SSD devono segnalare in modo accurato e persistente se stessi all'host Linux tramite i seguenti metodi:
++
+** # cat /sys/block/<dispositivo>/queue/rotational
++
+Il valore riportato per questi comandi deve essere '0'.
+
+
+
+* È previsto che i dispositivi siano collegati a un HBA o, in alcuni casi, a un controller RAID configurato per funzionare in modalità JBOD. Quando si utilizza un controller RAID, la funzione del dispositivo deve essere trasmessa tramite l'host senza sovrapporre alcuna funzionalità RAID. Quando si utilizza un controller RAID in modalità JBOD, è necessario consultare la documentazione RAID o contattare il fornitore, se necessario, per assicurarsi che il dispositivo riporti la velocità di rotazione come "0".
+* Ci sono due componenti di archiviazione separati:
++
+** Archiviazione di macchine virtuali
++
+Si tratta di un pool LVM (pool di storage) contenente i dati di sistema utilizzati per ospitare la macchina virtuale ONTAP Select . Il pool LVM deve essere supportato da un dispositivo flash ad alta resistenza e può essere SAS, SATA o NVMe. Per prestazioni migliori, si consiglia un dispositivo NVMe.
+
+** Dischi dati
++
+Si tratta di un set di unità SSD SAS o SATA utilizzate per la gestione dei dati. I dispositivi SSD devono essere di livello aziendale e durevoli. L'interfaccia NVMe non è supportata.
+
+
+
+* Tutti i dispositivi devono essere formattati a 512 BPS.
+
+
+--
+
+
+
+
+=== Configurazione del nodo ONTAP Select
+
+È necessario configurare ciascun nodo ONTAP Select e host hypervisor come segue per separare i dischi di sistema dalla radice e dagli aggregati di dati:
+
+* Creare un pool di archiviazione di sistema È necessario creare un pool di archiviazione per i dati di sistema ONTAP Select . È necessario collegare lo storage pool durante la configurazione del nodo ONTAP Select .
+* Collegare i dischi fisici necessari. L'host hypervisor deve avere i dischi SSD necessari collegati e disponibili per l'utilizzo da parte della macchina virtuale ONTAP Select . Queste unità contengono gli aggregati di dati e di root. È necessario collegare i dischi di storage durante la configurazione del nodo ONTAP Select .
+
+
+
+
+== Limitazioni della capacità di archiviazione
+
+Durante la pianificazione di una distribuzione ONTAP Select , è necessario essere a conoscenza delle restrizioni relative all'allocazione e all'utilizzo dello storage.
+
+Di seguito sono presentate le restrizioni di archiviazione più importanti. Dovresti anche rivedere illink:https://mysupport.netapp.com/matrix/["Strumento di matrice di interoperabilità"^] per informazioni più dettagliate.
+
+
+TIP: ONTAP Select impone diverse restrizioni relative all'allocazione e all'utilizzo dello storage. Prima di distribuire un cluster ONTAP Select o acquistare una licenza, è necessario acquisire familiarità con queste restrizioni. Vedi illink:https://docs.netapp.com/us-en/ontap-select/concept_lic_evaluation.html["Licenza"] sezione per maggiori informazioni.
+
+
+
+=== Calcola la capacità di archiviazione grezza
+
+La capacità di archiviazione ONTAP Select corrisponde alla dimensione totale consentita dei dati virtuali e dei dischi root collegati alla macchina virtuale ONTAP Select . È necessario tenerne conto quando si alloca la capacità.
+
+
+
+=== Capacità di archiviazione minima per un cluster a nodo singolo
+
+La dimensione minima del pool di archiviazione allocato per il nodo in un cluster a nodo singolo è:
+
+* Valutazione: 500 GB
+* Produzione: 1,0 TB
+
+
+L'allocazione minima per una distribuzione di produzione è pari a 1 TB per i dati utente, più circa 266 GB utilizzati da vari processi interni ONTAP Select , che sono considerati overhead necessari.
+
+
+
+=== Capacità di archiviazione minima per un cluster multi-nodo
+
+La dimensione minima del pool di archiviazione allocato per ciascun nodo in un cluster multi-nodo è:
+
+* Valutazione: 1,9 TB
+* Produzione: 2,0 TB
+
+
+L'allocazione minima per una distribuzione di produzione è pari a 2 TB per i dati utente, più circa 266 GB utilizzati da vari processi interni ONTAP Select , che sono considerati overhead necessari.
+
+[NOTE]
+====
+Ogni nodo in una coppia HA deve avere la stessa capacità di archiviazione.
+
+Quando si stima la quantità di storage per una coppia HA, è necessario considerare che tutti gli aggregati (root e dati) sono in mirroring. Di conseguenza, ogni plex dell'aggregato consuma la stessa quantità di storage.
+
+Ad esempio, quando viene creato un aggregato da 2 TB, vengono assegnati 2 TB a due istanze plex (2 TB per plex0 e 2 TB per plex1) o 4 TB della quantità totale di spazio di archiviazione concesso in licenza.
+
+====
+
+
+=== Capacità di archiviazione e più pool di archiviazione
+
+È possibile configurare ciascun nodo ONTAP Select per utilizzare fino a 400 TB di storage quando si utilizza storage locale collegato direttamente, VMware vSAN o array di storage esterni. Tuttavia, un singolo pool di storage ha una dimensione massima di 64 TB quando si utilizza storage collegato direttamente o array di storage esterni. Pertanto, se si prevede di utilizzare più di 64 TB di storage in queste situazioni, è necessario allocare più pool di storage come segue:
+
+* Assegnare il pool di archiviazione iniziale durante il processo di creazione del cluster
+* Aumentare lo storage del nodo allocando uno o più pool di storage aggiuntivi
+
+
+
+NOTE: In ogni pool di storage viene lasciato inutilizzato un buffer del 2% che non richiede una licenza di capacità. Questo storage non viene utilizzato da ONTAP Select, a meno che non venga specificato un limite di capacità. Se viene specificato un limite di capacità, verrà utilizzata tale quantità di storage, a meno che la quantità specificata non rientri nella zona del buffer del 2%. Il buffer è necessario per evitare errori occasionali che si verificano quando si tenta di allocare tutto lo spazio in un pool di storage.
+
+
+
+=== Capacità di archiviazione e VMware vSAN
+
+Quando si utilizza VMware vSAN, un datastore può avere dimensioni superiori a 64 TB. Tuttavia, inizialmente è possibile allocare solo fino a 64 TB durante la creazione del cluster ONTAP Select . Dopo la creazione del cluster, è possibile allocare ulteriore storage dal datastore vSAN esistente. La capacità del datastore vSAN che può essere utilizzata da ONTAP Select si basa sulla policy di storage della VM impostata.
+
+
+
+=== Buone pratiche
+
+Dovresti prendere in considerazione i seguenti consigli per quanto riguarda l'hardware principale dell'hypervisor:
+
+* Tutte le unità in un singolo aggregato ONTAP Select devono essere dello stesso tipo. Ad esempio, non si dovrebbero mischiare unità HDD e SSD nello stesso aggregato.
+
+
+
+
+== Requisiti aggiuntivi per l'unità disco in base alla licenza della piattaforma
+
+Le unità che scegli sono limitate in base all'offerta di licenza della piattaforma.
+
+
+NOTE: I requisiti relativi alle unità disco si applicano quando si utilizza un controller RAID locale e unità, nonché un RAID software. Questi requisiti non si applicano all'archiviazione esterna a cui si accede tramite la soluzione ONTAP Select vNAS.
+
+.Standard
+* Da 8 a 60 HDD interni (NL-SAS, SATA, 10K SAS)
+
+
+.Premio
+* Da 8 a 60 HDD interni (NL-SAS, SATA, 10K SAS)
+* Da 4 a 60 SSD interni
+
+
+.Premium XL
+* Da 8 a 60 HDD interni (NL-SAS, SATA, 10K SAS)
+* Da 4 a 60 SSD interni
+* Da 4 a 14 NVMe interni
+
+
+
+NOTE: Il RAID software con unità DAS locali è supportato con la licenza premium (solo SSD) e la licenza premium XL (SSD o NVMe).
+
+
+
+== Unità NVMe con RAID software
+
+È possibile configurare il RAID software per utilizzare unità SSD NVMe. L'ambiente deve soddisfare i seguenti requisiti:
+
+* ONTAP Select con un'utilità di amministrazione Deploy supportata
+* Offerta di licenza della piattaforma Premium XL o licenza di valutazione di 90 giorni
+* VMware ESXi versione 6.7 o successiva
+* Dispositivi NVMe conformi alla specifica 1.0 o successiva
+
+
+Prima di utilizzare le unità NVMe, è necessario configurarle manualmente. Vederelink:task_chk_nvme_configure.html["Configurare un host per utilizzare unità NVMe"] per maggiori informazioni.

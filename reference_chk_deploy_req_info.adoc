@@ -1,0 +1,71 @@
+---
+sidebar: sidebar 
+permalink: reference_chk_deploy_req_info.html 
+keywords: ontap select, deploy, pre-installation, vmware 
+summary: 'Prima di installare l"utilità di amministrazione Deploy in un ambiente VMware, rivedere i requisiti di base e prepararsi per una distribuzione corretta.' 
+---
+= Informazioni richieste per l'installazione dell'utilità ONTAP Select Deploy
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Prima di installare l'utilità di amministrazione Deploy in un ambiente hypervisor, rivedere le informazioni di configurazione richieste e le informazioni di configurazione di rete facoltative per preparare una distribuzione corretta.
+
+
+
+== Informazioni di configurazione richieste
+
+Come parte della pianificazione della distribuzione, è necessario determinare le informazioni di configurazione richieste prima di installare l'utilità di amministrazione ONTAP Select Deploy.
+
+[cols="40,60"]
+|===
+| Informazioni richieste | Descrizione 
+
+
+| Nome della macchina virtuale da distribuire | Identificatore da utilizzare per la macchina virtuale. 
+
+
+| Nome dell'host dell'hypervisor | Identificatore per l'host dell'hypervisor VMware ESXi o KVM in cui è installata l'utilità Deploy. 
+
+
+| Nome dell'archivio dati | Identificatore per l'archivio dati dell'hypervisor che contiene i file della macchina virtuale (sono richiesti circa 40 GB). 
+
+
+| Rete per la macchina virtuale | Identificatore della rete a cui è connessa la macchina virtuale Deploy. 
+|===
+
+
+== Informazioni facoltative sulla configurazione di rete
+
+Per impostazione predefinita, la macchina virtuale Deploy è configurata tramite DHCP. Tuttavia, se necessario, è possibile configurare manualmente l'interfaccia di rete per la macchina virtuale.
+
+[cols="35,65"]
+|===
+| Informazioni di rete | Descrizione 
+
+
+| Nome host | Identificatore della macchina host. 
+
+
+| Indirizzo IP dell'host | Indirizzo IPv4 statico della macchina host. 
+
+
+| Maschera di sottorete | Maschera di sottorete, basata sulla rete di cui fa parte la macchina virtuale. 
+
+
+| Portale | Gateway o router predefinito. 
+
+
+| Server DNS primario | Server dei nomi di dominio primario. 
+
+
+| Server DNS secondario | Server dei nomi di dominio secondario. 
+
+
+| Cerca domini | Elenco dei domini di ricerca da utilizzare. 
+|===

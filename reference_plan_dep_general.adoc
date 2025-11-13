@@ -1,0 +1,133 @@
+---
+sidebar: sidebar 
+permalink: reference_plan_dep_general.html 
+keywords: plan, planning, ontap select deploy, general requirements 
+summary: 'Esistono diversi requisiti generali che è opportuno prendere in considerazione quando si pianifica l"installazione dell"utilità di amministrazione ONTAP Select Deploy.' 
+---
+= Requisiti generali e pianificazione ONTAP Select Deploy
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Esistono diversi requisiti generali che è opportuno prendere in considerazione quando si pianifica l'installazione dell'utilità di amministrazione ONTAP Select Deploy.
+
+
+
+== Associazione dell'utilità Deploy con i cluster ONTAP Select
+
+Sono disponibili diverse opzioni per associare un'istanza dell'utilità Deploy ai cluster ONTAP Select .
+
+
+NOTE: In tutti gli scenari di distribuzione, un singolo cluster ONTAP Select e i nodi al suo interno possono essere gestiti da una sola istanza dell'utility di amministrazione Deploy. Un cluster non può essere gestito da due o più istanze diverse dell'utility Deploy.
+
+.Un'istanza dell'utilità per ogni cluster ONTAP Select
+È possibile distribuire e gestire ogni cluster ONTAP Select utilizzando un'istanza dedicata dell'utility Deploy. Con questa configurazione uno a uno, esiste una netta separazione tra ciascuna delle coppie utility-cluster. Questa configurazione fornisce un elevato livello di isolamento con domini di errore più piccoli.
+
+.Un'istanza dell'utilità per più cluster ONTAP Select
+È possibile distribuire e gestire più cluster ONTAP Select nella propria organizzazione utilizzando una singola istanza dell'utility Deploy. Con questa configurazione uno-a-molti, tutti i dati di elaborazione e configurazione vengono gestiti dalla stessa istanza dell'utility Deploy.
+
+
+NOTE: Un'istanza dell'utilità Deploy può amministrare fino a 400 nodi ONTAP Select o 100 cluster.
+
+
+
+== Requisiti relativi all'ambiente KVM
+
+Prima di installare l'utilità di amministrazione Deploy in un ambiente hypervisor KVM, è necessario esaminare i requisiti di base e prepararsi per la distribuzione.
+
+.Requisiti e restrizioni per una distribuzione
+Quando si installa l'utilità ONTAP Select Deploy in un ambiente KVM, è necessario tenere in considerazione diversi requisiti e restrizioni.
+
+.Requisiti hardware del server host KVM Linux
+Esistono diversi requisiti minimi di risorse che l'host hypervisor KVM Linux deve soddisfare. Verificare che gli host su cui è distribuito ONTAP Select soddisfino i seguenti requisiti di base:
+
+* Server Linux:
++
+** L'hardware e il software devono essere a 64 bit
+** Il server deve aderire alle stesse versioni supportate definite per un nodo ONTAP Select
+
+
+* CPU virtuali (2)
+* Memoria virtuale (4 GB)
+* Archiviazione (40 GB)
+* "Il protocollo DHCP (Dynamic Host Configuration Protocol) è abilitato (è anche possibile assegnare un indirizzo IP statico)
+
+
+.Connettività di rete
+Verificare che l'interfaccia di rete della macchina virtuale Deploy sia configurata e possa connettersi agli host ONTAP Select da essa gestiti.
+
+.Supporto per IP versione 4
+ONTAP Select Deploy supporta solo la versione IP 4 (IPv4). La versione IP 6 (IPv6) non è supportata. Questa restrizione influisce su ONTAP Select nei seguenti modi:
+
+* È necessario assegnare un indirizzo IPv4 al LIF di gestione della VM di distribuzione.
+* Deploy non può creare nodi ONTAP Select configurati per utilizzare IPv6 sui LIF ONTAP .
+
+
+
+
+== Informazioni di configurazione richieste
+
+Come parte della pianificazione della distribuzione, è necessario determinare le informazioni di configurazione richieste prima di installare l'utilità di amministrazione ONTAP Select Deploy.
+
+.Nome della VM da distribuire
+Nome da utilizzare per la VM.
+
+.Nome dell'host KVM Linux
+L'host KVM Linux in cui è installata l'utilità Deploy.
+
+.Nome del pool di archiviazione
+Il pool di archiviazione che contiene i file della VM (sono necessari circa 40 GB).
+
+.Rete per la VM
+La rete a cui è connessa la VM di distribuzione.
+
+
+
+== Informazioni facoltative sulla configurazione di rete
+
+Per impostazione predefinita, la VM di distribuzione è configurata tramite DHCP. Tuttavia, se necessario, è possibile configurare manualmente l'interfaccia di rete per la VM.
+
+.Nome host
+Il nome dell'host.
+
+.Indirizzo IP dell'host
+L'indirizzo IPv4 statico.
+
+.Maschera di sottorete
+La maschera di sottorete, che si basa sulla rete di cui fa parte la VM.
+
+.Portale
+Il gateway o router predefinito.
+
+.Server DNS primario
+Il server dei nomi di dominio primario.
+
+.Server DNS secondario
+Il server dei nomi di dominio secondario.
+
+.Cerca domini
+I domini di ricerca da utilizzare.
+
+
+
+== Autenticazione tramite l'archivio delle credenziali
+
+L'archivio credenziali ONTAP Select Deploy è un database contenente informazioni sugli account. Deploy utilizza le credenziali dell'account per eseguire l'autenticazione dell'host nell'ambito della creazione e gestione del cluster. È importante conoscere come l'archivio credenziali viene utilizzato durante la pianificazione di un'implementazione di ONTAP Select .
+
+
+NOTE: Le informazioni dell'account vengono archiviate in modo sicuro nel database mediante l'algoritmo di crittografia AES e l'algoritmo di hashing SHA-256.
+
+.Tipi di credenziali
+Sono supportati i seguenti tipi di credenziali:
+
+* Host Utilizzato per autenticare un host hypervisor come parte della distribuzione di un nodo ONTAP Select direttamente su VMware ESXi
+* vCenter Utilizzato per autenticare un server vCenter come parte della distribuzione di un nodo ONTAP Select su ESXi quando l'host è gestito da VMware vCenter
+
+
+.Accesso
+L'accesso all'archivio credenziali avviene internamente durante l'esecuzione delle normali attività amministrative di Deploy, come l'aggiunta di un host hypervisor. È anche possibile gestire l'archivio credenziali direttamente tramite l'interfaccia utente web e la CLI di Deploy.

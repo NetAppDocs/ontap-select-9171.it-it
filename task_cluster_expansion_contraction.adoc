@@ -1,0 +1,174 @@
+---
+sidebar: sidebar 
+permalink: task_cluster_expansion_contraction.html 
+keywords: cluster, expand, expansion, contract, contraction, six, eight, node deployment workflow, workflow, deployment steps 
+summary: A partire da ONTAP Select 9.15.1, è possibile aumentare o diminuire le dimensioni di un cluster esistente. 
+---
+= Espandi o contrai un cluster ONTAP Select su host ESXi o KVM
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+È possibile aumentare le dimensioni del cluster di un cluster ONTAP Select esistente per gli host hypervisor ESXi e KVM. Per gli host KVM, è possibile aumentare le dimensioni del cluster da sei a otto nodi e ridurle da otto a sei nodi. Per gli host ESXi, è possibile aumentare e diminuire la dimensione del cluster con incrementi compresi tra sei e dodici nodi.
+
+Le seguenti espansioni e contrazioni del cluster non sono supportate per gli host ESXi e KVM:
+
+* Espansioni da cluster a uno, due o quattro nodi a cluster a sei o otto nodi.
+* Contrazioni da cluster a sei o otto nodi a cluster a uno, due o quattro nodi.
+
+
+[NOTE]
+====
+Per modificare il numero di nodi in un cluster in una dimensione non supportata dall'espansione o dalla contrazione del cluster, è necessario eseguire le seguenti attività:
+
+. Distribuisci un nuovo cluster multi-nodo utilizzandolink:task_cli_deploy_cluster.html["Interfaccia a riga di comando"] o illink:task_deploy_cluster.html["interfaccia utente web"] fornito con l'utilità di amministrazione ONTAP Select Deploy.
+. Se applicabile, migrare i dati al nuovo cluster utilizzandolink:https://docs.netapp.com/us-en/ontap/data-protection/snapmirror-disaster-recovery-concept.html["Replica SnapMirror"^] .
+
+
+====
+È possibile avviare le procedure di espansione e contrazione del cluster da ONTAP Select Deploy tramite CLI, API o interfaccia Web.
+
+
+
+== Considerazioni su hardware e storage
+
+La funzionalità di espansione e contrazione del cluster è supportata sui seguenti host hypervisor KVM ed ESXi.
+
+[role="tabbed-block"]
+====
+.ESXi
+--
+A partire da ONTAP Select 9.15.1, l'espansione e la contrazione dei cluster sono supportate sugli host hypervisor ESXi.
+
+L'espansione e la contrazione dei cluster sono supportate dalle seguenti versioni dell'hypervisor ESXi:
+
+* ESXi 9.0
+* ESXi 8.0 U3
+* ESXi 8.0 U2
+* ESXi 8.0 U1
+* ESXi 8.0 GA
+* ESXi 7.0 U3
+* ESXi 7.0
+
+
+--
+.KVM
+--
+A partire da ONTAP Select 9.17.1, l'espansione e la contrazione dei cluster sono supportate sugli host hypervisor KVM.
+
+L'espansione e la contrazione del cluster sono supportate dalle seguenti versioni dell'hypervisor KVM:
+
+* Red Hat Enterprise Linux a 64 bit 9.6, 9.5, 9.4, 9.3, 9.2, 9.1, 9.0, 8.8, 8.7 e 8.6
+* Rocky Linux 9.6, 9.5, 9.4, 9.3, 9.2, 9.1, 9.0, 8.9, 8.8, 8.7 e 8.6
+
+
+--
+====
+
+
+== Espandi il cluster
+
+Utilizzare la funzionalità di espansione del cluster per aumentare le dimensioni di un cluster ESXi o KVM esistente.
+
+[role="tabbed-block"]
+====
+.ESXi
+--
+È possibile aumentare le dimensioni di un cluster ESXi esistente nei seguenti incrementi:
+
+* Da sei nodi a otto, dieci o dodici nodi
+* Da otto nodi a dieci o dodici nodi
+* Da dieci a dodici nodi
+
+
+--
+.KVM
+--
+È possibile aumentare le dimensioni di un cluster KVM esistente da sei a otto nodi.
+
+--
+====
+.Informazioni su questo compito
+In preparazione all'espansione del cluster, nuovi host ESXi e KVM vengono aggiunti all'inventario e vengono assegnati i dettagli dei nuovi nodi. Prima di avviare il processo di espansione del cluster, un pre-controllo di rete verifica la rete interna selezionata.
+
+.Prima di iniziare
+* Quando si distribuisce un cluster multi-nodo, è necessario avere familiarità con il controllo della connettività di rete. È possibile eseguire il controllo della connettività di rete utilizzandolink:task_adm_connectivity.html["interfaccia utente web"] o illink:task_cli_connectivity.html["Interfaccia a riga di comando"] .
+* Verifica di disporre dei dettagli della licenza per i nuovi nodi.
+
+
+.Passi
+. Sign in all'interfaccia utente Web dell'utilità Deploy utilizzando l'account amministratore.
+. Selezionare la scheda *Cluster* nella parte superiore della pagina e selezionare il cluster desiderato dall'elenco.
+. Nella pagina dei dettagli del cluster, seleziona l'icona dell'ingranaggio a destra della pagina e seleziona *Espandi cluster*.
+. Passare alla sezione *HA Pair 4*.
+. Selezionare i seguenti dettagli di configurazione della coppia ad alta disponibilità (HA) per la quarta coppia HA:
++
+** Tipo di istanza
+** Nomi dei nodi
+** Host hypervisor associati
+** Indirizzi IP dei nodi
+** Licenze
+** Configurazione di rete
+** Configurazione di archiviazione (tipo RAID e pool di archiviazione)
+
+
+. Selezionare *Salva coppia HA* per salvare i dettagli della configurazione.
+. Fornire le credenziali ONTAP e selezionare *Espandi cluster*.
+. Selezionare *Avanti* ed eseguire il controllo preliminare della rete selezionando *Esegui*.
++
+Il pre-controllo della rete convalida che la rete interna selezionata per il traffico del cluster ONTAP funzioni correttamente.
+
+. Selezionare *Espandi cluster* per avviare il processo di espansione del cluster, quindi selezionare *OK* nella finestra di dialogo.
++
+L'espansione del cluster può richiedere fino a 45 minuti.
+
+. Monitorare il processo di espansione del cluster in più fasi per confermare che l'espansione del cluster sia avvenuta correttamente.
+. Consultare la scheda *Eventi* per aggiornamenti periodici sullo stato di avanzamento dell'operazione. La pagina viene aggiornata automaticamente a intervalli regolari.
+
+
+.Dopo aver finito
+link:task_cli_clusters.html["Eseguire il backup dei dati di configurazione ONTAP Select Deploy"].
+
+
+
+== Contrarre il cluster
+
+Utilizzare la funzionalità di contrazione del cluster per ridurre le dimensioni di un cluster ESXi o KVM esistente.
+
+[role="tabbed-block"]
+====
+.ESXi
+--
+È possibile ridurre le dimensioni di un cluster ESXi esistente nei seguenti incrementi:
+
+* Da dodici nodi a dieci, otto o sei nodi
+* Da dieci nodi a otto o sei nodi
+* Da otto a sei nodi
+
+
+--
+.KVM
+--
+È possibile ridurre le dimensioni di un cluster esistente da otto a sei nodi.
+
+--
+====
+.Informazioni su questo compito
+La coppia di nodi HA desiderata nel cluster viene selezionata per preparare la contrazione del cluster durante la procedura.
+
+.Passi
+. Sign in all'interfaccia utente Web dell'utilità Deploy utilizzando l'account amministratore.
+. Selezionare la scheda *Cluster* nella parte superiore della pagina e selezionare il cluster desiderato dall'elenco.
+. Nella pagina dei dettagli del cluster, seleziona l'icona dell'ingranaggio a destra della pagina, quindi seleziona *Contratto Cluster*.
+. Selezionare i dettagli di configurazione della coppia HA per qualsiasi coppia HA che si desidera rimuovere e fornire le credenziali ONTAP , quindi selezionare *Contratto Cluster*.
++
+La contrazione del cluster può richiedere fino a 30 minuti.
+
+. Monitorare il processo di contrazione del cluster in più fasi per confermare che il cluster si sia contratto correttamente.
+. Consultare la scheda *Eventi* per aggiornamenti periodici sullo stato di avanzamento dell'operazione. La pagina viene aggiornata automaticamente a intervalli regolari.
+

@@ -1,0 +1,38 @@
+---
+sidebar: sidebar 
+permalink: concept_usecase_robo.html 
+keywords: ontap select, ROBO, remote office/branch office 
+summary: 'Distribuisci ONTAP Select in uffici remoti/filiali (ROBO) per supportare uffici più piccoli mantenendo al contempo amministrazione e controllo centralizzati.' 
+---
+= Utilizzare ONTAP Select in uffici remoti e filiali
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Distribuisci ONTAP Select in uffici remoti/filiali (ROBO) per supportare uffici più piccoli mantenendo al contempo amministrazione e controllo centralizzati.
+
+Sono supportate le seguenti configurazioni ROBO:
+
+* Cluster a due nodi con funzionalità HA
+* Cluster a nodo singolo
+
+
+La VM ONTAP Select può essere collocata insieme alle VM applicative, il che la rende una soluzione ottimale per gli operatori remoti.
+
+L'utilizzo di ONTAP Select per fornire servizi file di livello enterprise, consentendo al contempo la replica bidirezionale su altri cluster ONTAP Select o FAS , consente di realizzare soluzioni resilienti in ambienti low-touch o a basso costo. ONTAP Select è precompilato con licenze per i servizi di protocollo CIFS, NFS e iSCSI, nonché per le tecnologie di replica SnapMirror e SnapVault . Pertanto, tutte queste funzionalità sono disponibili immediatamente al momento dell'implementazione.
+
+
+NOTE: Poiché sono supportate tutte le licenze VMware vSphere, è possibile scegliere la licenza vSphere Remote Office Branch Office Standard o Advanced anziché la licenza Enterprise o Enterprise Plus. Sono ora supportate tutte le licenze vSphere e VSAN.
+
+Un cluster ONTAP Select a due nodi con un mediatore remoto è una soluzione interessante per i piccoli data center. In questa configurazione, la funzionalità HA è fornita da ONTAP Select. Il requisito di rete minimo per una soluzione ONTAP Select ROBO a due nodi è di quattro link da 1 Gb. È supportata anche una singola connessione di rete da 10 Gb. Un'altra opzione è la soluzione vNAS ONTAP Select in esecuzione su VSAN (inclusa la configurazione VSAN ROBO a due nodi). In questa configurazione, la funzionalità HA è fornita da VSAN. Infine, un cluster ONTAP Select a un nodo che replica i propri dati su una posizione centrale può fornire un set di solidi strumenti di gestione dei dati aziendali su un server di base.
+
+La figura seguente illustra una configurazione comune di un ufficio remoto che utilizza ONTAP Select su una VM ESXi. Le relazioni SnapMirror basate su pianificazione replicano periodicamente i dati dall'ufficio remoto a un singolo array di storage ingegnerizzato e consolidato situato nel data center principale.
+
+*Backup programmato dell'ufficio remoto sul data center aziendale*
+
+image:ROBO_01.jpg["Backup programmato dell'ufficio remoto sul data center aziendale"]

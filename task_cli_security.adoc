@@ -1,0 +1,30 @@
+---
+sidebar: sidebar 
+permalink: task_cli_security.html 
+keywords: administer, administering, cli, security 
+summary: Esistono diverse attività correlate che è possibile eseguire come parte della protezione di una distribuzione ONTAP Select . 
+---
+= Proteggere una distribuzione ONTAP Select
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Esistono diverse attività correlate che è possibile eseguire come parte della protezione di una distribuzione ONTAP Select .
+
+
+
+= Cambia la password dell'amministratore di Deploy
+
+È possibile modificare la password per l'account amministratore della macchina virtuale Deploy in base alle proprie esigenze, utilizzando l'interfaccia della riga di comando.
+
+.Passi
+. Sign in all'interfaccia della riga di comando dell'utilità Deploy utilizzando l'account amministratore.
+. Cambia la password:
+`password modify`
+. Rispondi a tutti i prompt in modo appropriato al tuo ambiente.
+

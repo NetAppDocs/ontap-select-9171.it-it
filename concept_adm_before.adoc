@@ -1,0 +1,78 @@
+---
+sidebar: sidebar 
+permalink: concept_adm_before.html 
+keywords: administer, administering, web, before you begin 
+summary: Dopo aver creato un cluster ONTAP Select , è possibile supportare la distribuzione eseguendo diverse attività amministrative. Ci sono alcune considerazioni generali da tenere a mente. 
+---
+= Prima di iniziare la somministrazione di ONTAP Select
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Dopo aver creato un cluster ONTAP Select , è possibile supportare la distribuzione eseguendo diverse attività amministrative. Ci sono alcune considerazioni generali da tenere a mente.
+
+In generale, le procedure che è possibile eseguire tramite l'interfaccia web Deploy rientrano in una delle tre categorie seguenti.
+
+.Distribuisci un cluster ONTAP Select
+È possibile distribuire un cluster a nodo singolo o multi-nodo. Vederelink:task_deploy_cluster.html["Distribuisci un cluster ONTAP Select"] per maggiori informazioni.
+
+.Eseguire una procedura con un cluster ONTAP Select esistente
+Le procedure amministrative sono organizzate in varie categorie, come _Sicurezza_ e _Cluster_.
+
+.Eseguire una procedura sull'utilità Deploy
+Esistono diverse procedure specifiche per Deploy (ad esempio la modifica della password dell'amministratore).
+
+
+
+== Amministra ONTAP Select
+
+Sono disponibili numerose procedure amministrative a supporto di ONTAP Select. Inoltre, sono disponibili procedure specifiche per l'utilità di amministrazione Deploy. Le più importanti di queste procedure sono presentate di seguito. In generale, tutte utilizzano l'interfaccia utente web di Deploy.
+
+
+NOTE: Puoi anchelink:https://docs.netapp.com/us-en/ontap-select/task_cli_signing_in.html["utilizzare l'interfaccia della riga di comando"] per amministrare ONTAP Select.
+
+
+
+== Eseguire una configurazione ONTAP aggiuntiva
+
+Dopo aver distribuito un cluster ONTAP Select , è possibile configurarlo e gestirlo esattamente come si farebbe con un sistema ONTAP basato su hardware. Ad esempio, è possibile utilizzare ONTAP System Manager o l'interfaccia a riga di comando ONTAP per configurare il cluster ONTAP Select .
+
+.Software client NetApp
+È possibile connettersi a ONTAP Select utilizzando il seguente software client NetApp supportato:
+
+* Gestore del sistema ONTAP
+* Active IQ Unified Manager
+* OnCommand Insight
+* OnCommand Workflow Automation
+* SnapCenter
+* Console di archiviazione virtuale per VMware vSphere
+
+
+Per identificare le versioni supportate del software client, rivedere illink:https://mysupport.netapp.com/matrix/["Strumento di matrice di interoperabilità"^] . Se il software client supporta ONTAP 9, la stessa versione è supportata anche con ONTAP Select
+
+
+NOTE: L'utilizzo di SnapCenter e dei relativi plug-in richiede licenze basate su server. La licenza del sistema di archiviazione dei plug-in SnapCenter non è attualmente supportata con ONTAP Select.
+
+Qualsiasi altro software client NetApp non incluso nell'elenco non è supportato da ONTAP Select.
+
+.Possibili opzioni di configurazione
+Sono disponibili diverse opzioni durante la configurazione del cluster, tra cui le seguenti:
+
+* Creazione della configurazione di rete
+* Disposizione degli aggregati
+* Creazione delle VM di archiviazione dati (SVM)
+
+
+.Licenze acquistate con capacità di archiviazione
+Se si è deciso di non installare i file di licenza con capacità di archiviazione come parte della distribuzione del cluster ONTAP Select , è necessario acquisire e installare i file di licenza prima della scadenza del periodo di tolleranza per i cluster in esecuzione con una licenza acquistata.
+
+.Aggregati speculari
+L'utility di amministrazione Deploy crea dischi di riserva per i dati su ciascun nodo ONTAP Select dallo spazio di archiviazione dati utilizzabile (ad esempio, Pool0 e Pool1). Per implementare l'alta disponibilità per i dati su un cluster multi-nodo, è necessario creare un aggregato mirrorato utilizzando questi dischi di riserva.
+
+
+NOTE: L'acquisizione dell'alta disponibilità è supportata solo quando gli aggregati di dati sono configurati come aggregati con mirroring.

@@ -1,0 +1,410 @@
+---
+sidebar: sidebar 
+permalink: reference_api_workflow01.html 
+keywords: rest api, deploy rest api, rest, workflow, create cluster, curl, json 
+summary: È possibile distribuire un cluster ONTAP Select a nodo singolo su un host VMware ESXi gestito da vCenter. Il cluster viene creato con una licenza di valutazione. 
+---
+= Flusso di lavoro 1: creare un cluster di valutazione a nodo singolo ONTAP Select su ESXi
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+È possibile distribuire un cluster ONTAP Select a nodo singolo su un host VMware ESXi gestito da vCenter. Il cluster viene creato con una licenza di valutazione.
+
+Il flusso di lavoro per la creazione del cluster varia nelle seguenti situazioni:
+
+* L'host ESXi non è gestito da vCenter (host autonomo)
+* All'interno del cluster vengono utilizzati più nodi o host
+* Il cluster viene distribuito in un ambiente di produzione con una licenza acquistata
+* L'hypervisor KVM viene utilizzato al posto di VMware ESXi
+
+
+
+
+== 1. Registrare le credenziali del server vCenter
+
+Quando si esegue la distribuzione su un host ESXi gestito da un server vCenter, è necessario aggiungere una credenziale prima di registrare l'host. L'utilità di amministrazione Deploy può quindi utilizzare la credenziale per l'autenticazione a vCenter.
+
+[cols="15,15,70"]
+|===
+| Categoria | Verbo HTTP | Sentiero 
+
+
+| Distribuire | INVIARE | /sicurezza/credenziali 
+|===
+Arricciare::
+
+
+[source, curl]
+----
+curl -iX POST -H 'Content-Type: application/json' -u admin:<password> -k -d @step01 'https://10.21.191.150/api/security/credentials'
+----
+Input JSON (passaggio 01)::
+
+
+[source, json]
+----
+{
+  "hostname": "vcenter.company-demo.com",
+  "type": "vcenter",
+  "username": "misteradmin@vsphere.local",
+  "password": "mypassword"
+}
+----
+Tipo di elaborazione:: Asincrono
+Produzione::
++
+--
+* ID credenziale nell'intestazione della risposta sulla posizione
+* Oggetto di lavoro
+
+
+--
+
+
+
+
+== 2. Registrare un host hypervisor
+
+È necessario aggiungere un host hypervisor in cui verrà eseguita la macchina virtuale contenente il nodo ONTAP Select .
+
+[cols="15,15,70"]
+|===
+| Categoria | Verbo HTTP | Sentiero 
+
+
+| Grappolo | INVIARE | /ospiti 
+|===
+Arricciare::
+
+
+[source, curl]
+----
+curl -iX POST -H 'Content-Type: application/json' -u admin:<password> -k -d @step02 'https://10.21.191.150/api/hosts'
+----
+Input JSON (passaggio 2)::
+
+
+[source, json]
+----
+{
+  "hosts": [
+    {
+      "hypervisor_type": "ESX",
+      "management_server": "vcenter.company-demo.com",
+      "name": "esx1.company-demo.com"
+    }
+  ]
+}
+----
+Tipo di elaborazione:: Asincrono
+Produzione::
++
+--
+* ID host nell'intestazione della risposta sulla posizione
+* Oggetto di lavoro
+
+
+--
+
+
+
+
+== 3. Creare un cluster
+
+Quando si crea un cluster ONTAP Select , la configurazione di base del cluster viene registrata e i nomi dei nodi vengono generati automaticamente da Deploy.
+
+[cols="15,15,70"]
+|===
+| Categoria | Verbo HTTP | Sentiero 
+
+
+| Grappolo | INVIARE | /cluster 
+|===
+Arricciare:: Per un cluster a nodo singolo, il parametro di query node_count deve essere impostato su 1.
+
+
+[source, curl]
+----
+curl -iX POST -H 'Content-Type: application/json' -u admin:<password> -k -d @step03 'https://10.21.191.150/api/clusters? node_count=1'
+----
+Input JSON (passaggio 03)::
+
+
+[source, json]
+----
+{
+  "name": "my_cluster"
+}
+----
+Tipo di elaborazione:: Sincrono
+Produzione::
++
+--
+* ID cluster nell'intestazione della risposta alla posizione
+
+
+--
+
+
+
+
+== 4. Configurare il cluster
+
+Ci sono diversi attributi che devi fornire come parte della configurazione del cluster.
+
+[cols="15,15,70"]
+|===
+| Categoria | Verbo HTTP | Sentiero 
+
+
+| Grappolo | TOPPA | /cluster/{id_cluster} 
+|===
+Arricciare:: È necessario fornire l'ID del cluster.
+
+
+[source, curl]
+----
+curl -iX PATCH -H 'Content-Type: application/json' -u admin:<password> -k -d @step04 'https://10.21.191.150/api/clusters/CLUSTERID'
+----
+Input JSON (passaggio 04)::
+
+
+[source, json]
+----
+{
+  "dns_info": {
+    "domains": ["lab1.company-demo.com"],
+    "dns_ips": ["10.206.80.135", "10.206.80.136"]
+    },
+    "ontap_image_version": "9.5",
+    "gateway": "10.206.80.1",
+    "ip": "10.206.80.115",
+    "netmask": "255.255.255.192",
+    "ntp_servers": {"10.206.80.183"}
+}
+----
+Tipo di elaborazione:: Sincrono
+Produzione:: Nessuno
+
+
+
+
+== 5. Recupera il nome del nodo
+
+L'utilità di amministrazione Deploy genera automaticamente gli identificatori e i nomi dei nodi quando viene creato un cluster. Prima di poter configurare un nodo, è necessario recuperare l'ID assegnato.
+
+[cols="15,15,70"]
+|===
+| Categoria | Verbo HTTP | Sentiero 
+
+
+| Grappolo | OTTENERE | /cluster/{cluster_id}/nodi 
+|===
+Arricciare:: È necessario fornire l'ID del cluster.
+
+
+[source, curl]
+----
+curl -iX GET -u admin:<password> -k 'https://10.21.191.150/api/clusters/CLUSTERID/nodes?fields=id,name'
+----
+Tipo di elaborazione:: Sincrono
+Produzione::
++
+--
+* Array registra ciascuno che descrive un singolo nodo con ID e nome univoci
+
+
+--
+
+
+
+
+== 6. Configurare i nodi
+
+È necessario fornire la configurazione di base per il nodo, che è la prima delle tre chiamate API utilizzate per configurare un nodo.
+
+[cols="15,15,70"]
+|===
+| Categoria | Verbo HTTP | Sentiero 
+
+
+| Grappolo | SENTIERO | /cluster/{id_cluster}/nodi/{id_nodo} 
+|===
+Arricciare:: È necessario fornire l'ID del cluster e l'ID del nodo.
+
+
+[source, curl]
+----
+curl -iX PATCH -H 'Content-Type: application/json' -u admin:<password> -k -d @step06 'https://10.21.191.150/api/clusters/CLUSTERID/nodes/NODEID'
+----
+Input JSON (passaggio 06):: È necessario fornire l'ID host su cui verrà eseguito il nodo ONTAP Select .
+
+
+[source, json]
+----
+{
+  "host": {
+    "id": "HOSTID"
+    },
+  "instance_type": "small",
+  "ip": "10.206.80.101",
+  "passthrough_disks": false
+}
+----
+Tipo di elaborazione:: Sincrono
+Produzione:: Nessuno
+
+
+
+
+== 7. Recuperare le reti dei nodi
+
+È necessario identificare le reti dati e di gestione utilizzate dal nodo nel cluster a nodo singolo. La rete interna non viene utilizzata con un cluster a nodo singolo.
+
+[cols="15,15,70"]
+|===
+| Categoria | Verbo HTTP | Sentiero 
+
+
+| Grappolo | OTTENERE | /cluster/{cluster_id}/nodi/{node_id}/reti 
+|===
+Arricciare:: È necessario fornire l'ID del cluster e l'ID del nodo.
+
+
+[source, curl]
+----
+curl -iX GET -u admin:<password> -k 'https://10.21.191.150/api/ clusters/CLUSTERID/nodes/NODEID/networks?fields=id,purpose'
+----
+Tipo di elaborazione:: Sincrono
+Produzione::
++
+--
+* Array di due record, ciascuno dei quali descrive una singola rete per il nodo, inclusi l'ID univoco e lo scopo
+
+
+--
+
+
+
+
+== 8. Configurare la rete dei nodi
+
+È necessario configurare le reti dati e di gestione. La rete interna non viene utilizzata con un cluster a nodo singolo.
+
+
+NOTE: Eseguire la seguente chiamata API due volte, una per ciascuna rete.
+
+[cols="15,15,70"]
+|===
+| Categoria | Verbo HTTP | Sentiero 
+
+
+| Grappolo | TOPPA | /cluster/{id_cluster}/nodi/{id_nodo}/reti/{id_rete} 
+|===
+Arricciare:: È necessario fornire l'ID del cluster, l'ID del nodo e l'ID della rete.
+
+
+[source, curl]
+----
+curl -iX PATCH -H 'Content-Type: application/json' -u admin:<password> -k -d @step08 'https://10.21.191.150/api/clusters/ CLUSTERID/nodes/NODEID/networks/NETWORKID'
+----
+Input JSON (passaggio 08):: È necessario fornire il nome della rete.
+
+
+[source, json]
+----
+{
+  "name": "sDOT_Network"
+}
+----
+Tipo di elaborazione:: Sincrono
+Produzione:: Nessuno
+
+
+
+
+== 9. Configurare il pool di archiviazione del nodo
+
+Il passaggio finale nella configurazione di un nodo consiste nel collegare uno storage pool. È possibile determinare gli storage pool disponibili tramite il client web vSphere o, facoltativamente, tramite l'API REST "Deploy".
+
+[cols="15,15,70"]
+|===
+| Categoria | Verbo HTTP | Sentiero 
+
+
+| Grappolo | TOPPA | /cluster/{id_cluster}/nodi/{id_nodo}/reti/{id_rete} 
+|===
+Arricciare:: È necessario fornire l'ID del cluster, l'ID del nodo e l'ID della rete.
+
+
+[source, curl]
+----
+curl -iX PATCH -H 'Content-Type: application/json' -u admin:<password> -k -d @step09 'https://10.21.191.150/api/clusters/ CLUSTERID/nodes/NODEID'
+----
+Input JSON (passaggio 09):: La capacità del pool è di 2 TB.
+
+
+[source, json]
+----
+{
+  "pool_array": [
+    {
+      "name": "sDOT-01",
+      "capacity": 2147483648000
+    }
+  ]
+}
+----
+Tipo di elaborazione:: Sincrono
+Produzione:: Nessuno
+
+
+
+
+== 10. Distribuisci il cluster
+
+Dopo aver configurato il cluster e il nodo, è possibile distribuire il cluster.
+
+[cols="15,15,70"]
+|===
+| Categoria | Verbo HTTP | Sentiero 
+
+
+| Grappolo | INVIARE | /cluster/{cluster_id}/distribuisci 
+|===
+Arricciare:: È necessario fornire l'ID del cluster.
+
+
+[source, curl]
+----
+curl -iX POST -H 'Content-Type: application/json' -u admin:<password> -k -d @step10 'https://10.21.191.150/api/clusters/CLUSTERID/deploy'
+----
+Input JSON (passaggio 10):: È necessario fornire la password per l'account amministratore ONTAP .
+
+
+[source, json]
+----
+{
+  "ontap_credentials": {
+    "password": "mypassword"
+  }
+}
+----
+Tipo di elaborazione:: Asincrono
+Produzione::
++
+--
+* Oggetto di lavoro
+
+
+--
+
+
+.Informazioni correlate
+link:deploy-evaluation-ontap-select-ovf-template.html["Distribuisci un'istanza di valutazione di 90 giorni di un cluster ONTAP Select"]

@@ -1,0 +1,39 @@
+---
+sidebar: sidebar 
+permalink: concept_api_before_browser.html 
+keywords: rest api, deploy rest api, rest, access browser, before you begin 
+summary: Ci sono diverse cose che dovresti sapere prima di utilizzare la pagina della documentazione online di Deploy. 
+---
+= Prima di accedere all'API ONTAP Select Deploy con un browser
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Ci sono diverse cose che dovresti sapere prima di utilizzare la pagina della documentazione online di Deploy.
+
+
+
+== Piano di distribuzione
+
+Se si intende effettuare chiamate API nell'ambito di specifiche attività di distribuzione o amministrative, è consigliabile creare un piano di distribuzione. Questi piani possono essere formali o informali e generalmente contengono gli obiettivi e le chiamate API da utilizzare. Per ulteriori informazioni, consultare Processi di flusso di lavoro che utilizzano l'API REST per la distribuzione.
+
+
+
+== Esempi JSON e definizioni dei parametri
+
+Ogni chiamata API è descritta nella pagina della documentazione utilizzando un formato coerente. Il contenuto include note di implementazione, parametri di query e codici di stato HTTP. Inoltre, è possibile visualizzare i dettagli sul codice JSON utilizzato con le richieste e le risposte API come segue:
+
+* Valore di esempio Se fai clic su _Valore di esempio_ in una chiamata API, viene visualizzata una tipica struttura JSON per la chiamata. Puoi modificare l'esempio in base alle tue esigenze e utilizzarlo come input per la tua richiesta.
+* Modello Se si fa clic su _Modello_, viene visualizzato un elenco completo dei parametri JSON, con una descrizione per ciascun parametro.
+
+
+
+
+== Attenzione quando si emettono chiamate API
+
+Tutte le operazioni API eseguite tramite la pagina della documentazione di Deploy sono operazioni live. È necessario prestare attenzione a non creare, aggiornare o eliminare per errore dati di configurazione o altri dati.

@@ -1,0 +1,37 @@
+---
+sidebar: sidebar 
+permalink: concept_lic_cp_benefits.html 
+keywords: license, licensing, Capacity Pools, benefits 
+summary: 'Esistono diversi vantaggi nell"utilizzare il modello di licenza Capacity Pools anziché il modello di licenza Capacity Tiers.' 
+---
+= Riepilogo dei vantaggi della licenza ONTAP Select Capacity Pools
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Esistono diversi vantaggi nell'utilizzare il modello di licenza Capacity Pools anziché il modello di licenza Capacity Tiers.
+
+
+
+== Utilizzo più efficiente della capacità di archiviazione
+
+Utilizzando la licenza Capacity Tiers, si alloca una capacità di storage fissa a ciascun nodo. Lo spazio inutilizzato non può essere condiviso con gli altri nodi e viene di fatto sprecato. Con la licenza Capacity Pools, ogni nodo consuma solo la capacità di cui ha bisogno, in base alla dimensione degli aggregati di dati.
+
+E poiché la capacità è ancorata a un pool centrale, può essere condivisa tra molti nodi della tua organizzazione.
+
+
+
+== Costi amministrativi notevolmente ridotti con conseguente riduzione dei costi
+
+Se si utilizzano licenze Capacity Tier, è necessario ottenere e installare una licenza per ogni nodo. Quando si utilizzano Capacity Pool, è disponibile una licenza per ogni pool condiviso. Questo può ridurre drasticamente il sovraccarico amministrativo e i costi.
+
+
+
+== Metriche di utilizzo migliorate
+
+L'interfaccia utente web di Deploy fornisce informazioni avanzate sull'utilizzo dei Capacity Pool. È possibile determinare rapidamente la quantità di storage utilizzata e disponibile in un Capacity Pool, quali nodi utilizzano lo storage di un pool e da quali pool un cluster sta allocando capacità.

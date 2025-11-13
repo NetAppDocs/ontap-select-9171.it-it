@@ -1,0 +1,38 @@
+---
+sidebar: sidebar 
+permalink: concept_lic_cp_restrictions.html 
+keywords: license, licensing, Capacity Pools, restrictions 
+summary: Di seguito sono riportate le restrizioni applicabili quando si utilizza il modello di licenza Capacity Pool. 
+---
+= Limitazioni di distribuzione per la licenza ONTAP Select Capacity Pools
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Di seguito sono riportate le restrizioni applicabili quando si utilizza il modello di licenza Capacity Pool.
+
+.Modello di licenza coerente per cluster
+Tutti i nodi all'interno di un singolo cluster ONTAP Select devono utilizzare lo stesso modello di licenza, ovvero Capacity Tiers o Capacity Pool. Non è possibile combinare i tipi di licenza per i nodi all'interno di un singolo cluster.
+
+.Tutti i nodi in un cluster utilizzano la stessa istanza di License Manager
+Tutti i nodi con una licenza Capacity Pool in un cluster ONTAP Select devono utilizzare la stessa istanza di License Manager. Poiché all'interno di ogni istanza di Deploy è presente un'istanza di License Manager, questa restrizione ribadisce il requisito esistente secondo cui tutti i nodi di un cluster devono essere gestiti dalla stessa istanza di Deploy.
+
+.Un pool di capacità per nodo
+Ogni nodo può affittare lo storage da un solo Capacity Pool. Un nodo non può utilizzare due o più pool.
+
+.Stesso pool per i nodi in una coppia HA
+Entrambi i nodi di una singola coppia HA devono affittare lo storage dallo stesso Capacity Pool. Tuttavia, diverse coppie HA all'interno dello stesso cluster possono affittare lo storage da pool diversi gestiti dallo stesso License Manager.
+
+.Durata della licenza di archiviazione
+Quando si acquista una licenza di storage da NetApp, è necessario scegliere una durata. Ad esempio, una licenza potrebbe essere valida per un anno.
+
+.Durata del leasing dell'aggregato di dati
+Quando un nodo ONTAP Select richiede un lease di storage per un aggregato di dati, License Manager fornisce un lease per una durata specifica in base alla configurazione del Capacity Pool. È possibile configurare la durata del lease per ciascun pool tra un'ora e sette giorni. La durata predefinita del lease è di 24 ore.
+
+.Indirizzo IP statico assegnato a Deploy
+Quando si utilizza la licenza Capacity Pools, è necessario assegnare un indirizzo IP statico all'utilità di amministrazione Deploy.

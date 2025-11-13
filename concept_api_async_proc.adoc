@@ -1,0 +1,72 @@
+---
+sidebar: sidebar 
+permalink: concept_api_async_proc.html 
+keywords: rest api, deploy rest api, rest, asynchronous processing, job object 
+summary: Alcune chiamate API Deploy, in particolare quelle che creano o modificano una risorsa, possono richiedere più tempo rispetto ad altre. ONTAP Select Deploy elabora queste richieste di lunga durata in modo asincrono. 
+---
+= Elaborazione asincrona tramite l'oggetto Job per ONTAP Select
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Alcune chiamate API Deploy, in particolare quelle che creano o modificano una risorsa, possono richiedere più tempo rispetto ad altre. ONTAP Select Deploy elabora queste richieste di lunga durata in modo asincrono.
+
+
+
+== Richieste asincrone descritte utilizzando l'oggetto Job
+
+Dopo aver effettuato una chiamata API eseguita in modo asincrono, il codice di risposta HTTP 202 indica che la richiesta è stata convalidata e accettata correttamente, ma non è ancora stata completata. La richiesta viene elaborata come un'attività in background che continua a essere eseguita dopo la risposta HTTP iniziale al client. La risposta include l'oggetto Job che ancora la richiesta, incluso il suo identificatore univoco.
+
+
+NOTE: Per determinare quali chiamate API funzionano in modo asincrono, fare riferimento alla pagina della documentazione online ONTAP Select Deploy.
+
+
+
+== Interroga l'oggetto Job associato a una richiesta API
+
+L'oggetto Job restituito nella risposta HTTP contiene diverse proprietà. È possibile interrogare la proprietà di stato per determinare se la richiesta è stata completata correttamente. Un oggetto Job può trovarsi in uno dei seguenti stati:
+
+* In coda
+* Corsa
+* Successo
+* Fallimento
+
+
+Esistono due tecniche che è possibile utilizzare quando si interroga un oggetto Job per rilevare uno stato terminale per l'attività, ovvero successo o fallimento:
+
+* Richiesta di polling standard Lo stato del lavoro corrente viene restituito immediatamente
+* Richiesta di polling lungo Lo stato del lavoro viene restituito solo quando si verifica una delle seguenti situazioni:
++
+** Lo stato è cambiato più di recente rispetto al valore data-ora fornito nella richiesta di sondaggio
+** Il valore di timeout è scaduto (da 1 a 120 secondi)
+
+
+
+
+Il polling standard e il polling lungo utilizzano la stessa chiamata API per interrogare un oggetto Job. Tuttavia, una richiesta di polling lunga include due parametri di query: `poll_timeout` E `last_modified` .
+
+
+TIP: È consigliabile utilizzare sempre il polling lungo per ridurre il carico di lavoro sulla macchina virtuale Deploy.
+
+
+
+== Procedura generale per l'emissione di una richiesta asincrona
+
+Per completare una chiamata API asincrona, è possibile utilizzare la seguente procedura di alto livello:
+
+. Emettere la chiamata API asincrona.
+. Ricevere una risposta HTTP 202 che indica l'accettazione corretta della richiesta.
+. Estrarre l'identificatore per l'oggetto Job dal corpo della risposta.
+. All'interno di un ciclo, eseguire quanto segue in ogni ciclo:
++
+.. Ottieni lo stato attuale del lavoro con una richiesta di sondaggio lungo
+.. Se il Job è in uno stato non terminale (in coda, in esecuzione), eseguire nuovamente il ciclo.
+
+
+. Interrompere quando il lavoro raggiunge uno stato terminale (successo, fallimento).
+

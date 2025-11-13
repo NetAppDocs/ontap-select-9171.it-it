@@ -1,0 +1,55 @@
+---
+sidebar: sidebar 
+permalink: concept_lic_cp_compare_ct.html 
+keywords: license, licensing, Capacity Pools, Capacity Tiers, comparing 
+summary: Esistono diverse differenze tra i modelli di licenza Capacity Pools e Capacity Tiers. 
+---
+= Confronta le ONTAP Select Capacity Pools e Capacity Tiers
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+La tabella seguente confronta i due modelli di licenza di produzione supportati da ONTAP Select.
+
+[cols="20,40,40"]
+|===
+|  | Livelli di capacità | Pool di capacità 
+
+
+| Numero di serie della licenza | Nove cifre generate da NetApp e assegnate a un nodo | Nove cifre generate da NetApp e assegnate a un Capacity Pool 
+
+
+| Blocco della licenza | Bloccato sul nodo ONTAP Select | Bloccato all'istanza di License Manager 
+
+
+| Durata della licenza | Perpetuo (nessun rinnovo richiesto) | Durata fissa in base all'acquisto (rinnovo obbligatorio) 
+
+
+| Durata del contratto di locazione per l'aggregazione dei dati | Non applicabile | Da un'ora a sette giorni 
+
+
+| Numero di serie del nodo | Nove cifre e pari al numero di serie della licenza | Venti cifre e generato da License Manager 
+
+
+| Supporto | Aggiuntivo e limitato nel tempo | Incluso e co-definito 
+
+
+| Tipi di licenza | Standard, premium, premium XL | Standard, premium, premium XL 
+
+
+| Licenza di valutazione disponibile | SÌ | SÌ 
+
+
+| Valutazione per l'aggiornamento della produzione | SÌ | NO 
+
+
+| ONTAP Select la dimensione della macchina virtuale (da piccola a media, da media a grande) | SÌ | SÌ 
+
+
+| Esecuzione: patente scaduta | N / A | Sì (nessun periodo di grazia) 
+|===

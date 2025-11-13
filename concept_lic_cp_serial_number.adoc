@@ -1,0 +1,42 @@
+---
+sidebar: sidebar 
+permalink: concept_lic_cp_serial_number.html 
+keywords: license, licensing, Capacity Pools, node serial numbers 
+summary: Con il modello di licenza Capacity Tiers, il numero di serie del nodo a nove cifre è lo stesso del numero di serie della licenza assegnato al nodo. Tuttavia, i numeri di serie assegnati ai nodi utilizzando il modello di licenza Capacity Pools hanno un formato diverso. 
+---
+= Numeri di serie dei nodi per il modello di licenza ONTAP Select Capacity Pools
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Con il modello di licenza Capacity Tiers, il numero di serie del nodo a nove cifre è lo stesso del numero di serie della licenza assegnato al nodo. Tuttavia, i numeri di serie assegnati ai nodi utilizzando il modello di licenza Capacity Pools hanno un formato diverso.
+
+Il numero di serie di un nodo che utilizza la licenza Capacity Pools ha il seguente formato:
+
+`999 ppppppppp nnnnnnnn`
+
+
+NOTE: Per maggiore chiarezza sono stati aggiunti degli spazi, che però non fanno parte del numero di serie effettivo.
+
+Ogni sezione del numero di serie del nodo è descritta nella tabella seguente, da sinistra a destra.
+
+[cols="15,85"]
+|===
+| Sezione | Descrizione 
+
+
+| '999' | Valore costante a tre cifre riservato da NetApp. 
+
+
+| ppppppppp | Numero di serie della licenza variabile a nove cifre assegnato al Capacity Pool da NetApp 
+
+
+| nnnnnnnn | Valore variabile di otto cifre generato da License Manager per ciascun nodo che utilizza il Capacity Pool 
+|===
+
+NOTE: Attenzione: quando si apre un caso con il supporto NetApp relativo a un nodo che utilizza una licenza Capacity Pool, non è possibile fornire il numero di serie completo del nodo a venti cifre. È invece necessario fornire il numero di serie della licenza Capacity Pool a nove cifre. È possibile ricavare il numero di serie della licenza dal numero di serie del nodo, come mostrato sopra. Saltare le prime tre cifre del numero di serie del nodo ('999') ed estrarre le nove cifre successive (ppppppppp).
