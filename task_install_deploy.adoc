@@ -18,31 +18,29 @@ summary: 'È necessario installare l"utilità di amministrazione ONTAP Select De
 
 
 
-== Scarica l'immagine della macchina virtuale
+== Passaggio 1: scarica l'immagine della macchina virtuale
 
-È possibile scaricare il pacchetto ONTAP Select dal sito di supporto NetApp .
+Scarica il pacchetto ONTAP Select dal sito di supporto NetApp.
 
 .Prima di iniziare
 https://mysupport.netapp.com/site/user/registration["Hai un account registrato sul sito di supporto NetApp"^].
 
 .Informazioni su questo compito
-L'utilità di amministrazione ONTAP Select Deploy è confezionata come macchina virtuale (VM) basata sullo standard Open Virtualization Format (OVF). Il singolo file compresso ha il suffisso `ova` . fornisce il server di distribuzione e le immagini di installazione per i nodi ONTAP Select .
+L'utilità di amministrazione ONTAP Select Deploy è confezionata come macchina virtuale (VM) basata sullo standard Open Virtualization Format (OVF). Il singolo file compresso ha il suffisso `OVA` per gli host ESXi e `TGZ` per gli host KVM. La VM fornisce il server Deploy e le immagini di installazione per i nodi ONTAP Select.
 
 .Passi
-. Accedi allink:https://mysupport.netapp.com/site/["Sito di supporto NetApp"^] utilizzando un browser web ed effettuando l'accesso.
-. Selezionare *Download* dal menu, quindi selezionare *Download* dal menu a discesa.
-. Nella pagina Download, in Tutti i prodotti dalla A alla Z, seleziona la lettera *O*.
-. Scorri verso il basso e seleziona * ONTAP Select*.
-. Selezionare la versione desiderata del pacchetto.
+. Accedi alla link:https://mysupport.netapp.com/site/downloads/["Download dal sito di supporto NetApp"^] page.
+. Scorri verso il basso e seleziona *ONTAP Select Deploy*.
+. Selezionare la versione ONTAP Select desiderata.
 . Rivedi il Contratto di licenza con l'utente finale (EULA) e seleziona *Accetta e continua*.
-. Seleziona e scarica il pacchetto appropriato, rispondendo a tutte le richieste secondo necessità.
+. Seleziona e scarica il pacchetto *ONTAP Select Deploy Install* appropriato. Rispondi a tutte le richieste secondo necessità.
 
 
 
 
-== Verificare la firma ONTAP Select Deploy OVA
+== Passaggio 2: verificare la firma ONTAP Select Deploy OVA
 
-Prima di installare il pacchetto di installazione, è necessario verificare la firma ONTAP Select Open Virtualization Appliance (OVA).
+Verificare la firma di ONTAP Select Open Virtualization Appliance (OVA) prima di installare il pacchetto di installazione.
 
 .Prima di iniziare
 Verifica che il tuo sistema soddisfi i seguenti requisiti:
@@ -52,7 +50,7 @@ Verifica che il tuo sistema soddisfi i seguenti requisiti:
 
 
 .Passi
-. Ottieni i seguenti file dalla pagina di download del prodotto sul sito di supporto NetApp :
+. Ottieni i seguenti file dalla pagina di download del prodotto sul sito di supporto NetApp:
 +
 [cols="2*"]
 |===
@@ -74,9 +72,9 @@ Verifica che il tuo sistema soddisfi i seguenti requisiti:
 | `ONTAPdeploy.ova.sig` | L'algoritmo SHA-256 viene sottoposto a hash e quindi firmato dal Remote Support Agent (RSA) utilizzando `csc-prod` chiave e firma per l'installatore. 
 |===
 . Verificare che il `ONTAPdeploy.ova.sig` il file utilizza i certificati associati e i comandi di convalida.
-. Verificare la firma con il seguente comando:
+. Verifica la firma:
 +
-[listing]
+[source, cli]
 ----
 openssl dgst  -sha256 -verify ONTAP-Select-Deploy-Production.pub -signature ONTAPdeploy.ova.sig  ONTAPdeploy.ova
 ----
@@ -84,9 +82,9 @@ openssl dgst  -sha256 -verify ONTAP-Select-Deploy-Production.pub -signature ONTA
 
 
 
-== Distribuisci la macchina virtuale
+== Passaggio 3: distribuisci la macchina virtuale
 
-È necessario installare e avviare la VM ONTAP Select Deploy utilizzando l'immagine VM OVF. Durante il processo di installazione, è necessario configurare l'interfaccia di rete per utilizzare DHCP o una configurazione IP statica.
+Installare e avviare la VM ONTAP Select Deploy utilizzando l'immagine VM OVF. Come parte del processo di installazione, configurare l'interfaccia di rete per utilizzare DHCP o una configurazione IP statica.
 
 .Prima di iniziare
 Per un hypervisor ESXi, è necessario prepararsi a distribuire la VM ONTAP Select Deploy:
@@ -117,14 +115,14 @@ I passaggi da seguire variano a seconda che si utilizzi un hypervisor ESXi o KVM
 --
 . Accedi al client vSphere ed effettua l'accesso.
 . Passare alla posizione appropriata nella gerarchia e selezionare *Distribuisci modello OVF*.
-. Selezionare il file OVA e completare la procedura guidata Distribuisci modello OVF, selezionando le opzioni appropriate per il proprio ambiente.
+. Seleziona il file OVA e completa la procedura guidata "Distribuisci modello OVF". Seleziona le opzioni appropriate per il tuo ambiente.
 +
 È necessario definire la password per l'account amministratore. È necessario fornire questa password quando si accede all'utilità di distribuzione.
 
 . Dopo aver distribuito la VM, selezionala. Se non è già accesa in base alle impostazioni della procedura guidata di distribuzione, accendila manualmente.
 . Se necessario, è possibile configurare la rete di distribuzione utilizzando la console della VM:
 +
-.. Fare clic sulla scheda *Console* per accedere alla shell di configurazione dell'host ESXi e monitorare il processo di accensione.
+.. Selezionare la scheda *Console* per accedere alla shell di configurazione dell'host ESXi e monitorare il processo di accensione.
 .. Attendi il seguente messaggio:
 +
 Nome host:
@@ -200,9 +198,9 @@ Use DHCP to set networking information? [n]:
 ====
 
 
-== Sign in all'interfaccia web di Deploy
+== Passaggio 4: Sign in all'interfaccia web di Deploy
 
-È necessario accedere all'interfaccia utente Web per confermare che l'utilità Deploy sia disponibile ed eseguire la configurazione iniziale.
+Sign in all'interfaccia utente web per confermare che l'utilità Deploy sia disponibile ed eseguire la configurazione iniziale.
 
 .Passi
 . Punta il tuo browser all'utilità Deploy utilizzando l'indirizzo IP o il nome di dominio:
@@ -211,7 +209,7 @@ Use DHCP to set networking information? [n]:
 
 . Fornire il nome dell'account amministratore (admin) e la password ed effettuare l'accesso.
 . Se viene visualizzata la finestra pop-up *Benvenuti in ONTAP Select*, rivedere i prerequisiti e selezionare *OK* per continuare.
-. Se è la prima volta che accedi e non hai installato Deploy tramite la procedura guidata disponibile con vCenter, fornisci le seguenti informazioni di configurazione quando richiesto:
+. Se è la prima volta che si accede e non si è installato Deploy tramite la procedura guidata disponibile con vCenter, fornire le seguenti informazioni di configurazione quando richiesto:
 +
 ** Nuova password per l'account amministratore (obbligatoria)
 ** AutoSupport (facoltativo)
@@ -220,7 +218,10 @@ Use DHCP to set networking information? [n]:
 
 
 
+.E ora:
+link:task_deploy_cluster.html["Distribuisci un cluster ONTAP Select"]
+
 .Informazioni correlate
-* link:task_cli_signing_in.html["Sign in per distribuire tramite SSH"]
-* link:deploy-evaluation-ontap-select-ovf-template.html["Distribuisci un'istanza di valutazione di 90 giorni di un cluster ONTAP Select"]
+* link:task_cli_signing_in.html["Scopri come effettuare l'accesso a Deploy utilizzando SSH"]
+* link:deploy-evaluation-ontap-select-ovf-template.html["Scopri come distribuire un'istanza di valutazione di 90 giorni di un ONTAP Select cluster"]
 
