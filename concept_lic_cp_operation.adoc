@@ -48,7 +48,7 @@ Ogni istanza di License Manager, e quindi ogni istanza dell'utility Deploy corri
 È possibile determinare l'ID di blocco della licenza per l'istanza di Deploy tramite l'interfaccia utente Web nei seguenti modi:
 
 * Pagina introduttiva Questa pagina viene visualizzata al primo accesso a Deploy. È anche possibile visualizzare la pagina facendo clic sul menu a discesa in alto a destra della pagina e selezionando "Introduzione". Il LLID viene visualizzato nella sezione "Aggiungi licenze".
-* Amministrazione Fare clic sulla scheda *Amministrazione* nella parte superiore della pagina, quindi fare clic su *Sistemi* e *Impostazioni*.
+* Amministrazione Fai clic sulla scheda *Amministrazione* nella parte superiore della pagina, quindi fai clic su *Systems & AutoSupport*.
 
 
 
