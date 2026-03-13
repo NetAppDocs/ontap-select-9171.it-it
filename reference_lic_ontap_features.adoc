@@ -38,6 +38,10 @@ Le seguenti funzionalità ONTAP sono supportate da ONTAP Select e concesse in li
 * Capacità multitenancy ONTAP
 * ONTAP S3
 * S3 SnapMirror
+* SnapLock Select
++
+SnapLock Select è l'implementazione di ONTAP SnapLock progettata per ONTAP Select e include SnapLock Enterprise. Non include SnapLock Compliance. Per ulteriori informazioni, consultare il link:https://docs.netapp.com/us-en/ontap/snaplock/index.html["Documentazione ONTAP SnapLock"^].
+
 * SnapMirror
 * Cloud SnapMirror
 * SnapRestore
@@ -61,7 +65,7 @@ NOTE: ONTAP Select supporta SVM DR sia come sorgente che come destinazione, con 
 
 [NOTE]
 ====
-* Per ONTAP Select 9.16.1 e versioni precedenti, SnapLock Select Enterprise (incluso il blocco snapshot antimanomissione) è disponibile dalink:https://mysupport.netapp.com/site/["Sito di supporto NetApp"^] .
+* Per ONTAP Select 9.16.1 e versioni precedenti, SnapLock Select (incluso il blocco snapshot antimanomissione) è disponibile da link:https://mysupport.netapp.com/site/["Sito di supporto NetApp"^].
 * La SnapLock Compliance non è supportata per ONTAP Select.
 * Quando si utilizza StorageGRID non è necessaria una licenza FabricPool .
 
