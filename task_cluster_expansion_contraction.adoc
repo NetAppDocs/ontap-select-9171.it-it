@@ -35,6 +35,7 @@ Per modificare il numero di nodi in un cluster in una dimensione non supportata 
 
 
 
+[[hardware-and-storage-considerations]]
 == Considerazioni su hardware e storage
 
 La funzionalità di espansione e contrazione del cluster è supportata sui seguenti host hypervisor KVM ed ESXi.
@@ -80,6 +81,7 @@ Esistono limitazioni al flusso di lavoro RAID software per gli hypervisor KVM su
 ====
 
 
+[[expand-the-cluster]]
 == Espandi il cluster
 
 Utilizzare la funzionalità di espansione del cluster per aumentare le dimensioni di un cluster ESXi o KVM esistente.
@@ -145,6 +147,7 @@ link:task_cli_clusters.html["Eseguire il backup dei dati di configurazione ONTAP
 
 
 
+[[contract-the-cluster]]
 == Contrarre il cluster
 
 Utilizzare la funzionalità di contrazione del cluster per ridurre le dimensioni di un cluster ESXi o KVM esistente.

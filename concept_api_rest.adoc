@@ -18,12 +18,14 @@ Il Representational State Transfer (REST) è uno stile per la creazione di appli
 
 
 
+[[architecture-and-classic-constraints]]
 == Architettura e vincoli classici
 
 REST è stato formalmente articolato da Roy Fielding nel suo dottorato di ricerca https://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm["dissertazione"] presso l'UC Irvine nel 2000. Definisce uno stile architetturale attraverso una serie di vincoli, che nel loro insieme migliorano le applicazioni web e i protocolli sottostanti. I vincoli stabiliscono un'applicazione di servizi web RESTful basata su un'architettura client/server che utilizza un protocollo di comunicazione stateless.
 
 
 
+[[resources-and-state-representation]]
 == Risorse e rappresentanza statale
 
 Le risorse sono i componenti di base di un sistema basato sul web. Quando si crea un'applicazione di servizi web REST, le prime attività di progettazione includono:
@@ -36,12 +38,14 @@ I messaggi vengono scambiati tra il client e il server per accedere e modificare
 
 
 
+[[uri-endpoints]]
 == Endpoint URI
 
 Ogni risorsa REST deve essere definita e resa disponibile utilizzando uno schema di indirizzamento ben definito. Gli endpoint in cui le risorse sono localizzate e identificate utilizzano un Uniform Resource Identifier (URI). L'URI fornisce un framework generale per la creazione di un nome univoco per ciascuna risorsa nella rete. L'Uniform Resource Locator (URL) è un tipo di URI utilizzato con i servizi web per identificare e accedere alle risorse. Le risorse sono in genere esposte in una struttura gerarchica simile a una directory di file.
 
 
 
+[[http-messages]]
 == Messaggi HTTP
 
 Il protocollo HTTP (Hypertext Transfer Protocol) è il protocollo utilizzato dal client e dal server dei servizi web per scambiare messaggi di richiesta e risposta relativi alle risorse. Durante la progettazione di un'applicazione di servizi web, i verbi HTTP (come GET e POST) vengono mappati alle risorse e alle corrispondenti azioni di gestione dello stato.
@@ -50,6 +54,7 @@ HTTP è un protocollo stateless. Pertanto, per associare un insieme di richieste
 
 
 
+[[json-formatting]]
 == Formattazione JSON
 
 Sebbene le informazioni possano essere strutturate e trasferite tra un client e un server in diversi modi, l'opzione più diffusa (e quella utilizzata con la Deploy REST API) è JavaScript Object Notation (JSON). JSON è uno standard industriale per la rappresentazione di strutture dati semplici in testo normale e viene utilizzato per trasferire informazioni sullo stato che descrivono le risorse.

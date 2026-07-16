@@ -29,6 +29,7 @@ Esistono diverse procedure specifiche per Deploy (ad esempio la modifica della p
 
 
 
+[[administer-ontap-select]]
 == Amministra ONTAP Select
 
 Sono disponibili numerose procedure amministrative a supporto di ONTAP Select. Inoltre, sono disponibili procedure specifiche per l'utilità di amministrazione Deploy. Le più importanti di queste procedure sono presentate di seguito. In generale, tutte utilizzano l'interfaccia utente web di Deploy.
@@ -38,6 +39,7 @@ NOTE: Puoi anchelink:https://docs.netapp.com/us-en/ontap-select/task_cli_signing
 
 
 
+[[perform-additional-ontap-configuration]]
 == Eseguire una configurazione ONTAP aggiuntiva
 
 Dopo aver distribuito un cluster ONTAP Select , è possibile configurarlo e gestirlo esattamente come si farebbe con un sistema ONTAP basato su hardware. Ad esempio, è possibile utilizzare ONTAP System Manager o l'interfaccia a riga di comando ONTAP per configurare il cluster ONTAP Select .

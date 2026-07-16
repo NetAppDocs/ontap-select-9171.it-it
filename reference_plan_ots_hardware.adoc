@@ -18,6 +18,7 @@ Esistono diversi requisiti hardware e problemi di pianificazione da considerare 
 
 
 
+[[hypervisor-requirements]]
 == Requisiti dell'hypervisor
 
 Esistono diversi requisiti relativi all'hypervisor su cui viene eseguito ONTAP Select .
@@ -27,12 +28,14 @@ NOTE: Dovresti rivedere illink:reference_release_notes.html["Note sulla versione
 
 
 
+[[vmware-licensing]]
 === Licenza VMware
 
 Per distribuire un cluster ONTAP Select , la tua organizzazione deve disporre di una licenza VMware vSphere valida per gli host hypervisor su cui è in esecuzione ONTAP Select . È consigliabile utilizzare le licenze appropriate per la tua distribuzione.
 
 
 
+[[software-compatibility]]
 === Compatibilità software
 
 È possibile distribuire ONTAP Select sugli hypervisor KVM ed ESXi.
@@ -79,12 +82,14 @@ NOTE: ESXi 6.5 GA ed ESXi 6.7 GA hanno raggiunto lo stato di fine disponibilità
 ====
 
 
+[[vmware-vcenter-and-standalone-esxi-hosts]]
 === VMware vCenter e host ESXi autonomi
 
 Se un host hypervisor ESXi è gestito da un server vCenter, è necessario registrarlo nell'utility di amministrazione Deploy utilizzando le credenziali vCenter. Non è possibile registrare l'host come host autonomo utilizzando le credenziali ESXi.
 
 
 
+[[core-hardware-requirements]]
 == Requisiti hardware principali
 
 L'host hypervisor fisico su cui si distribuisce ONTAP Select deve soddisfare diversi requisiti hardware. È possibile scegliere qualsiasi piattaforma per l'host hypervisor, purché soddisfi i requisiti hardware minimi. I seguenti fornitori offrono piattaforme hardware supportate: Cisco, Dell, HP, Fujitsu, Lenovo e Supermicro.
@@ -96,6 +101,7 @@ Fare riferimento al https://mysupport.netapp.com/matrix["Strumento matrice di in
 
 
 
+[[basic-hardware-requirements]]
 === Requisiti hardware di base
 
 Esistono diversi requisiti hardware comuni che si applicano a tutte le piattaforme, indipendentemente dal tipo di istanza del nodo o dall'offerta di licenza.
@@ -124,6 +130,7 @@ Sono supportate diverse configurazioni Ethernet in base alle dimensioni del clus
 |===
 
 
+[[additional-hardware-requirements-based-on-the-instance-type]]
 === Requisiti hardware aggiuntivi in base al tipo di istanza
 
 Sono previsti diversi requisiti hardware aggiuntivi in base al tipo di istanza del nodo.

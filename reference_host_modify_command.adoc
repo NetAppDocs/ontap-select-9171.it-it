@@ -18,12 +18,14 @@ Puoi usare il `host modify` comando per modificare un server di gestione host co
 
 
 
+[[syntax]]
 == Sintassi
 
 `host modify [-help] [-foreground] -name _name_ -mgmt-server _management_server_ [-username _username_]`
 
 
 
+[[required-parameters]]
 == Parametri richiesti
 
 [cols="35,65"]
@@ -48,6 +50,7 @@ L'indirizzo IP o il nome di dominio completo (FQDN) del server di gestione host 
 |===
 
 
+[[optional-parameters]]
 == Parametri facoltativi
 
 [cols="35,65"]

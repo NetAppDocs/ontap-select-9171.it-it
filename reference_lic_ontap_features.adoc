@@ -21,6 +21,7 @@ NOTE: Le funzionalità ONTAP che hanno dipendenze specifiche dall'hardware in ge
 
 
 
+[[ontap-features-automatically-enabled-by-default]]
 == Funzionalità ONTAP abilitate automaticamente per impostazione predefinita
 
 Le seguenti funzionalità ONTAP sono supportate da ONTAP Select e concesse in licenza per impostazione predefinita:
@@ -60,6 +61,7 @@ NOTE: ONTAP Select supporta SVM DR sia come sorgente che come destinazione, con 
 
 
 
+[[ontap-features-that-are-separately-licensed]]
 == Funzionalità ONTAP concesse in licenza separatamente
 
 È necessario acquistare una licenza separata per qualsiasi funzionalità ONTAP non abilitata per impostazione predefinita, tra cui:

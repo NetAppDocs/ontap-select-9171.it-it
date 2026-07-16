@@ -18,6 +18,7 @@ Prima di distribuire ONTAP Select, è necessario configurare correttamente la re
 
 
 
+[[virtual-switch-options]]
 == Opzioni di switch virtuale
 
 È necessario configurare uno switch virtuale su ciascuno degli host ONTAP Select per supportare la rete esterna e la rete interna (solo per cluster multi-nodo). Nell'ambito dell'implementazione di un cluster multi-nodo, è necessario testare la connettività di rete sulla rete interna del cluster.
@@ -27,12 +28,14 @@ NOTE: Per saperne di più su come configurare un vSwitch su un host hypervisor e
 
 
 
+[[upgrade-to-vmxnet3-esxi-only]]
 == Aggiorna a VMXNET3 (solo ESXi)
 
 A partire da ONTAP Select 9.5 con Deploy 2.10, VMXNET3 è il driver di rete predefinito incluso nelle nuove distribuzioni di cluster su VMware ESXi. Se si aggiorna un nodo ONTAP Select precedente alla versione 9.5 o successiva, il driver non viene aggiornato automaticamente.
 
 
 
+[[cluster-mtu]]
 == MTU del cluster
 
 Per connettere i nodi ONTAP Select in un cluster multi-nodo, viene utilizzata una rete interna separata. In genere, la dimensione MTU per questa rete è 9000. Tuttavia, in alcuni casi, questa dimensione MTU è troppo grande per la rete che connette i nodi ONTAP Select . Per gestire frame più piccoli, la dimensione MTU utilizzata da ONTAP Select sulla rete interna può essere compresa tra 7500 e 9000 byte.
@@ -49,6 +52,7 @@ NOTE: Se necessario, è possibile impostare manualmente il valore MTU del cluste
 
 
 
+[[two-nic-host-with-standard-vswitch-esxi-only]]
 == Host con due NIC con vSwitch standard (solo ESXi)
 
 Per migliorare le prestazioni ONTAP Select in una configurazione con due NIC, è necessario isolare il traffico di rete interno ed esterno utilizzando due gruppi di porte. Questa raccomandazione si applica alla seguente configurazione specifica:
@@ -76,6 +80,7 @@ Vedi illink:concept_nw_concepts_chars.html["Networking approfondito"] sezione pe
 
 
 
+[[four-nic-host-with-standard-vswitch-esxi-only]]
 == Host a quattro NIC con vSwitch standard (solo ESXi)
 
 Per migliorare le prestazioni ONTAP Select in una configurazione con quattro NIC, è necessario isolare il traffico di rete interno ed esterno utilizzando quattro gruppi di porte. Questa raccomandazione si applica alla seguente configurazione specifica:
@@ -115,6 +120,7 @@ Vedi illink:concept_nw_concepts_chars.html["Networking approfondito"] sezione pe
 
 
 
+[[network-traffic-requirements]]
 == Requisiti del traffico di rete
 
 È necessario assicurarsi che i firewall siano configurati correttamente per consentire il flusso del traffico di rete tra i vari partecipanti in un ambiente di distribuzione ONTAP Select .

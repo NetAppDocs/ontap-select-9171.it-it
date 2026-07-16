@@ -18,6 +18,7 @@ Esistono diversi requisiti generali che è opportuno prendere in considerazione 
 
 
 
+[[pairing-the-deploy-utility-with-the-ontap-select-clusters]]
 == Associazione dell'utilità Deploy con i cluster ONTAP Select
 
 Sono disponibili diverse opzioni per associare un'istanza dell'utilità Deploy ai cluster ONTAP Select .
@@ -36,6 +37,7 @@ NOTE: Un'istanza dell'utilità Deploy può amministrare fino a 400 nodi ONTAP Se
 
 
 
+[[requirements-related-to-the-kvm-environment]]
 == Requisiti relativi all'ambiente KVM
 
 Prima di installare l'utilità di amministrazione Deploy in un ambiente hypervisor KVM, è necessario esaminare i requisiti di base e prepararsi per la distribuzione.
@@ -70,6 +72,7 @@ ONTAP Select Deploy supporta solo la versione IP 4 (IPv4). La versione IP 6 (IPv
 
 
 
+[[required-configuration-information]]
 == Informazioni di configurazione richieste
 
 Come parte della pianificazione della distribuzione, è necessario determinare le informazioni di configurazione richieste prima di installare l'utilità di amministrazione ONTAP Select Deploy.
@@ -88,6 +91,7 @@ La rete a cui è connessa la VM di distribuzione.
 
 
 
+[[optional-network-configuration-information]]
 == Informazioni facoltative sulla configurazione di rete
 
 Per impostazione predefinita, la VM di distribuzione è configurata tramite DHCP. Tuttavia, se necessario, è possibile configurare manualmente l'interfaccia di rete per la VM.
@@ -115,6 +119,7 @@ I domini di ricerca da utilizzare.
 
 
 
+[[authentication-using-the-credential-store]]
 == Autenticazione tramite l'archivio delle credenziali
 
 L'archivio credenziali ONTAP Select Deploy è un database contenente informazioni sugli account. Deploy utilizza le credenziali dell'account per eseguire l'autenticazione dell'host nell'ambito della creazione e gestione del cluster. È importante conoscere come l'archivio credenziali viene utilizzato durante la pianificazione di un'implementazione di ONTAP Select .

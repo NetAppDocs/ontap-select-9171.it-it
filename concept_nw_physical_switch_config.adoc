@@ -24,6 +24,7 @@ Il traffico di rete interno ONTAP Select avviene tramite interfacce virtuali def
 
 
 
+[[shared-physical-switch]]
 == Switch fisico condiviso
 
 La figura seguente illustra una possibile configurazione di switch utilizzata da un nodo in un cluster ONTAP Select multinodo. In questo esempio, le schede di rete fisiche utilizzate dai vSwitch che ospitano sia i gruppi di porte di rete interni che quelli esterni sono cablate allo stesso switch upstream. Il traffico dello switch viene mantenuto isolato utilizzando domini di broadcast contenuti in VLAN separate.
@@ -40,6 +41,7 @@ NOTE: In questa configurazione, lo switch condiviso diventa un singolo punto di 
 
 
 
+[[multiple-physical-switches]]
 == Più switch fisici
 
 Quando è necessaria la ridondanza, è necessario utilizzare più switch di rete fisici. La figura seguente mostra una configurazione consigliata utilizzata da un nodo in un cluster ONTAP Select multinodo. Le schede di rete (NIC) dei gruppi di porte interni ed esterni sono cablate su switch fisici diversi, proteggendo l'utente da un singolo guasto hardware dello switch. Un canale di porte virtuale è configurato tra gli switch per prevenire problemi di spanning tree.

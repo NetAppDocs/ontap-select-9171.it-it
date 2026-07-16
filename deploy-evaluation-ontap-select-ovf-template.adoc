@@ -26,6 +26,7 @@ summary: 'È possibile distribuire rapidamente un"istanza di valutazione di 90 g
 
 
 
+[[prepare-the-ontap-select-cluster-host]]
 == Preparare l'host del cluster ONTAP Select
 
 Utilizzare i seguenti requisiti per preparare l'host ESXi in cui verrà distribuito il cluster ONTAP Select . La descrizione della piattaforma si basa sulla configurazione di tipo istanza standard o piccola con storage locale collegato direttamente (DAS) formattato utilizzando il file system VMFS-5 o VMFS-6.
@@ -36,6 +37,7 @@ Per ulteriori informazioni sulle opzioni di configurazione dell'host, vederelink
 
 
 
+[[deploy-a-single-node-ontap-select-cluster-using-an-ovf-template]]
 == Distribuisci un cluster ONTAP Select a nodo singolo utilizzando un modello OVF
 
 Completare i seguenti passaggi su un server host ESXi a 64 bit supportato.
